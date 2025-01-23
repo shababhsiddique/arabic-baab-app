@@ -1,8 +1,4 @@
-import 'package:baab_practice/config/styles.dart';
-import 'package:baab_practice/model/word.dart';
-import 'package:baab_practice/widgets/baab_practice_app_drawer.dart';
-import 'package:baab_practice/controller/appController.dart';
-import 'package:baab_practice/widgets/verbCard.dart';
+import 'package:baab_practice/helper/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

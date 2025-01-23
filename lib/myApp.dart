@@ -1,4 +1,4 @@
-import 'package:baab_practice/config/router.dart';
+import 'package:baab_practice/helper/router.dart';
 import 'package:baab_practice/controller/appController.dart';
 import 'package:baab_practice/screens/home.dart';
 import 'package:flutter/material.dart';

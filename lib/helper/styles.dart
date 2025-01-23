@@ -8,15 +8,15 @@ const TextStyle appbarTextStyle = TextStyle(
 abstract class myTextStyles {
 
   static const TextStyle cardTitle = TextStyle(
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: FontWeight.w600,
-    height: 2.5,
+    //height: 2.5,
     color: Colors.blue
 
   );
 
   static const TextStyle cardColumnHeading = TextStyle(
-    fontSize: 24,
+    fontSize: 20,
   );
 
   static const TextStyle cardColumnValue = TextStyle(
@@ -24,8 +24,8 @@ abstract class myTextStyles {
   );
 
   static const TextStyle cardButton = TextStyle(
-      fontSize: 25,
+      fontSize: 20,
       fontWeight: FontWeight.bold,
-      color: Colors.blue
+      color: Colors.black
   );
 }
