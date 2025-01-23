@@ -23,20 +23,24 @@ class AppControllerState extends ChangeNotifier {
 
   bool showAnswer = false;
 
-  List<ArabicVerb> currentSessionIncorrectVerbs = [];
 
   //final ref;
   AppControllerState() {
     isDarkmode = VerbAppPreferences.isDarkMode();
+    loadSession();
+  }
+
+  loadSession(){
     currentSessionVerbs = VerbAppDatabase.fetchVerbs();
     if(currentSessionVerbs.isEmpty){
       VerbAppDatabase.fillVerbsFromSource().then((v){
         currentSessionVerbs = VerbAppDatabase.fetchVerbs();
+        notifyListeners();
       });
     }
-    //currentSessionIncorrectVerbs = VerbAppDatabase.fetchIncorrect();
+
     print("app state initiated");
-    if(currentQuestionVerb == null){
+    if(currentQuestionVerb == null && currentSessionVerbs.isNotEmpty){
       generateNewRandomQuestionVerb();
     }
   }
@@ -56,13 +60,19 @@ class AppControllerState extends ChangeNotifier {
   }
 
   removeCurrentQuestionFromPool(){
-    if(currentQuestionVerbIndex != -1){
+    if(currentQuestionVerbIndex != -1 && currentSessionVerbs.isNotEmpty){
       //remove last question from session
-      currentSessionVerbs.removeAt(currentQuestionVerbIndex);
+      currentQuestionVerb!.decreaseFailCount();
+      currentQuestionVerb!.save();
+      if(currentQuestionVerb!.failCounter == 0){
+        currentSessionVerbs.removeAt(currentQuestionVerbIndex);
+      }
     }
+    print("reached ${currentSessionVerbs.length}");
+    notifyListeners();
   }
 
-  generateNewRandomQuestionVerb() async {
+  dynamic generateNewRandomQuestionVerb() {
 
     if(currentSessionVerbs.isNotEmpty){
       // Generate a random index within the box length
@@ -70,8 +80,10 @@ class AppControllerState extends ChangeNotifier {
       //set this as current verb
       currentQuestionVerb = currentSessionVerbs.elementAt(currentQuestionVerbIndex);
       currentQuestionText = currentQuestionVerb?.pickRandomQuestion() ?? "";
-    }
 
+    } else {
+
+    }
 
     notifyListeners();
   }
@@ -83,13 +95,16 @@ class AppControllerState extends ChangeNotifier {
     }
   }
 
-  addToIncorrect(verb){
-    currentSessionIncorrectVerbs.add(verb);
-    //VerbAppDatabase.addToIncorrect(verb);
+  addToIncorrect(ArabicVerb verb){
+
+    //VerbAppDatabase.increaseVerbFail(verb);
+    verb.failCounter = verb.failCounter + 1;
+    verb.save();
+    notifyListeners();
   }
 
-  int geCurrenttIncorrectCount(){
-    return currentSessionIncorrectVerbs.length;
+  int geCurrentIncorrectCount(){
+    return VerbAppDatabase.getPreviousFailWords().length;
   }
 
 }

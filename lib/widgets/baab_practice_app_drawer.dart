@@ -43,6 +43,14 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           SizedBox(height: 7),
 
           ListTile(
+            title: const Text('Get Incorrect Verb count'),
+            onTap: () {
+              print(VerbAppDatabase.getPreviousFailWords().length);
+            },
+          ),
+          SizedBox(height: 7),
+
+          ListTile(
             title: const Text('Get'),
             onTap: () {
               ArabicVerb? v = VerbAppDatabase.getVerbByMaadi('كَتَبَ');

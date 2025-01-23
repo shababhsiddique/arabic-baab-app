@@ -123,7 +123,7 @@ class VerbCard extends ConsumerWidget {
                       if(!showingAnswer){
                         applicationControl.setShowAnswer(true);
                       } else {
-                        //picked correct, remove current question
+                        //You picked correct, remove current question
                         applicationControl.removeCurrentQuestionFromPool();
                         //generate new
                         applicationControl.setShowAnswer(false);

@@ -30,6 +30,39 @@ class AppHome extends ConsumerWidget {
           child: Center(
             child: Column(
               children: [
+                (applicationController.currentSessionVerbs.isEmpty ? Container(
+                  padding: EdgeInsets.only(top: 20),
+                  child: Column(
+                    children: [
+                      Text(
+                          "Congratulations you have finished your session",
+                        style: myTextStyles.cardTitle,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        width: 200,
+                        color: Color(0xFF00D1D1),
+                        child: TextButton(
+                          onPressed: () {
+                            applicationController.loadSession();
+                            applicationController.setShowAnswer(false);
+                            applicationController.generateNewRandomQuestionVerb();
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Restart",
+                                style: myTextStyles.cardButton,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ):Container()),
                 (applicationController.currentQuestionVerb != null
                     ? VerbCard(
                   question: applicationController.currentQuestionText,
@@ -38,7 +71,7 @@ class AppHome extends ConsumerWidget {
                     : Text("No Question Found")),
                 Text("Currently showing ALL"),
                 Text("Verbs left ${applicationController.getCurrentSessionWordsLeft()}"),
-                Text("Incorrect count ${applicationController.geCurrenttIncorrectCount()}"),
+                Text("Incorrect count ${applicationController.geCurrentIncorrectCount()}"),
               ],
             ),
           ),

@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:hive/hive.dart';
 
 part 'ArabicVerb.g.dart';  // For Hive code generation
@@ -53,5 +52,11 @@ class ArabicVerb extends HiveObject {
     int randomIndex = random.nextInt(properties.length);
 
     return properties[randomIndex];
+  }
+
+  decreaseFailCount(){
+    if(failCounter > 0){
+      failCounter--;
+    }
   }
 }

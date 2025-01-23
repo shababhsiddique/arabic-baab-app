@@ -11,7 +11,8 @@ abstract class VerbAppDatabase {
   static const String mainVerbBox = "mainVerbBox";
   static const String verbListIndex = "verbs";
   static const String incorrectListIndex = "incorrect";
-  static const String sourceCSVURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=728929932&single=true&output=csv';
+  static const String sourceCSVURL =
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=728929932&single=true&output=csv';
 
   static Future<Box?> initHive() async {
     box = await Hive.openBox(mainVerbBox);
@@ -49,7 +50,7 @@ abstract class VerbAppDatabase {
         List<List<dynamic>> rows = const CsvToListConverter().convert(csvData);
 
         // Skip header row and process the data
-        for (int i = 1; i < rows.length; i++) {
+        for (int i = 1; i < 5; i++) {
           final row = rows[i];
 
           ArabicVerb verb = ArabicVerb(
@@ -60,7 +61,7 @@ abstract class VerbAppDatabase {
             baab: row[4].toString(),
           );
 
-          if(!box!.containsKey(verb.maadi)){
+          if (!box!.containsKey(verb.maadi)) {
             // Add each new verb to Hive database
             await box!.put(verb.maadi, verb);
           }
@@ -87,32 +88,20 @@ abstract class VerbAppDatabase {
     await box!.clear();
   }
 
-  Future<void> increaseVerbFail(ArabicVerb verb) async {
-    box = Hive.box<ArabicVerb>(mainVerbBox);
-
-    verb.failCounter = verb.failCounter + 1;
-    await verb.save();
-
-    /* ArabicVerb row = box!.get(verb.maadi);
-    verb.failCounter = verb.failCounter + 1;
-    row.failCounter = verb.failCounter;
-    await row.save();*/
-  }
-
-  Future<void> decreaseVerbFail(ArabicVerb verb) async {
-     box = Hive.box<ArabicVerb>(mainVerbBox);
-
-    verb.failCounter = verb.failCounter - 1;
-    await verb.save();
-  }
-
-  List<ArabicVerb> getPreviousFailWords() {
-    var box = Hive.box<ArabicVerb>('verbsBox');
+  static List<ArabicVerb> getPreviousFailWords() {
+    box ??= Hive.box<ArabicVerb>(mainVerbBox);
     // Filter verbs where failCounter is greater than 0 (indicating incorrect attempts)
-    return box.values.where((verb) => verb.failCounter > 0).toList();
+    List<ArabicVerb> failWords = [];
+
+    for (ArabicVerb verb in box!.values.where((verb) => verb.failCounter > 0)) {
+      print("Maadi: ${verb.maadi}, Bengali: ${verb.bengaliMeaning}");
+      failWords.add(verb);
+    }
+
+    return failWords;
   }
 
-  /*static Future<void> addToIncorrect(ArabicVerb verb) async {
+/*static Future<void> addToIncorrect(ArabicVerb verb) async {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
     await iBox!.put(verb.maadi, verb);
   }
@@ -132,7 +121,4 @@ abstract class VerbAppDatabase {
     }
     return verbList;
   }*/
-
-
-
 }
