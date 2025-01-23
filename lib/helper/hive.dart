@@ -36,6 +36,22 @@ abstract class VerbAppDatabase {
     return verbList;
   }
 
+
+  static List<ArabicVerb> fetchVerbsByBaab(List<String> selectedBaabs) {
+    box ??= Hive.box<ArabicVerb>(mainVerbBox);
+    // Filter verbs where failCounter is greater than 0 (indicating incorrect attempts)
+    List<ArabicVerb> selectedVerbs = [];
+
+    for( var baab in selectedBaabs){
+      for (ArabicVerb verb in box!.values.where((verb) => verb.baab == baab)) {
+        print("Maadi: ${verb.maadi}, Bengali: ${verb.bengaliMeaning}");
+        selectedVerbs.add(verb);
+      }
+    }
+
+    return selectedVerbs;
+  }
+
   static Future<bool> fillVerbsFromSource() async {
     // Fetch CSV file from the link
     try {
@@ -50,7 +66,7 @@ abstract class VerbAppDatabase {
         List<List<dynamic>> rows = const CsvToListConverter().convert(csvData);
 
         // Skip header row and process the data
-        for (int i = 1; i < 5; i++) {
+        for (int i = 1; i < rows.length; i++) {
           final row = rows[i];
 
           ArabicVerb verb = ArabicVerb(
@@ -60,10 +76,27 @@ abstract class VerbAppDatabase {
             bengaliMeaning: row[3].toString(),
             baab: row[4].toString(),
           );
+          var existingVerb = box!.get(verb.maadi);
 
-          if (!box!.containsKey(verb.maadi)) {
-            // Add each new verb to Hive database
+          if (existingVerb != null) {
+            // Compare properties to check if they are the same
+            bool isIdentical = existingVerb.mudari == verb.mudari &&
+                existingVerb.masdar == verb.masdar &&
+                existingVerb.bengaliMeaning == verb.bengaliMeaning &&
+                existingVerb.baab == verb.baab;
+
+            if (!isIdentical) {
+              // Remove existing and update with new one
+              await box!.delete(verb.maadi);
+              await box!.put(verb.maadi, verb);
+              print('Updated existing verb: ${verb.maadi}');
+            } else {
+              print('Verb already exists with identical data: ${verb.maadi}');
+            }
+          } else {
+            // Add new verb if it doesn't exist
             await box!.put(verb.maadi, verb);
+            print('Added new verb: ${verb.maadi}');
           }
         }
 

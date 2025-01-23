@@ -1,6 +1,6 @@
 import 'package:baab_practice/helper/styles.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
-import 'package:baab_practice/widgets/baab_practice_app_drawer.dart';
+import 'package:baab_practice/widgets/baabPracticeAppDrawer.dart';
 import 'package:baab_practice/controller/appController.dart';
 import 'package:baab_practice/widgets/verbCard.dart';
 import 'package:flutter/material.dart';
@@ -36,7 +36,7 @@ class AppHome extends ConsumerWidget {
                     children: [
                       Text(
                           "Congratulations you have finished your session",
-                        style: myTextStyles.cardTitle,
+                        style: MyTextStyles.cardTitle,
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 10),
@@ -54,7 +54,7 @@ class AppHome extends ConsumerWidget {
                             children: [
                               Text(
                                 "Restart",
-                                style: myTextStyles.cardButton,
+                                style: MyTextStyles.cardButton,
                               ),
                             ],
                           ),

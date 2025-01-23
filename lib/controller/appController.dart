@@ -2,6 +2,7 @@
 // By using a provider, this allows us to mock/override the value exposed.
 import 'dart:math';
 
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/hive.dart';
 import 'package:baab_practice/helper/preferences.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
@@ -23,6 +24,11 @@ class AppControllerState extends ChangeNotifier {
 
   bool showAnswer = false;
 
+  List<String> includeBaabs = [
+    ArabicTerms.baabFatahaYaftahu,
+    ArabicTerms.baabNasaraYansuru,
+  ];
+
 
   //final ref;
   AppControllerState() {
@@ -31,18 +37,23 @@ class AppControllerState extends ChangeNotifier {
   }
 
   loadSession(){
-    currentSessionVerbs = VerbAppDatabase.fetchVerbs();
+    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+
+    if(currentQuestionVerb == null && currentSessionVerbs.isNotEmpty){
+      generateNewRandomQuestionVerb();
+    }
+
+    //this if data was emptyl;
     if(currentSessionVerbs.isEmpty){
       VerbAppDatabase.fillVerbsFromSource().then((v){
-        currentSessionVerbs = VerbAppDatabase.fetchVerbs();
+        currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+        generateNewRandomQuestionVerb();
         notifyListeners();
       });
     }
 
     print("app state initiated");
-    if(currentQuestionVerb == null && currentSessionVerbs.isNotEmpty){
-      generateNewRandomQuestionVerb();
-    }
+
   }
 
   void toggleDarkMode(){
@@ -82,7 +93,7 @@ class AppControllerState extends ChangeNotifier {
       currentQuestionText = currentQuestionVerb?.pickRandomQuestion() ?? "";
 
     } else {
-
+      currentQuestionVerb = null;
     }
 
     notifyListeners();

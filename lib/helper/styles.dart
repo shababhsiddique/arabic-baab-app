@@ -5,7 +5,7 @@ const TextStyle appbarTextStyle = TextStyle(
   fontWeight: FontWeight.w500
 );
 
-abstract class myTextStyles {
+abstract class MyTextStyles {
 
   static const TextStyle cardTitle = TextStyle(
     fontSize: 26,
@@ -27,5 +27,9 @@ abstract class myTextStyles {
       fontSize: 20,
       fontWeight: FontWeight.bold,
       color: Colors.black
+  );
+
+  static const TextStyle radioArabicBaab = TextStyle(
+      fontSize: 24,
   );
 }

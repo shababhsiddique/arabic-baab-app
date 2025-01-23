@@ -1,5 +1,7 @@
 import 'package:baab_practice/controller/appController.dart';
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/hive.dart';
+import 'package:baab_practice/helper/styles.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,12 +11,9 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
     super.key,
   });
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final applicationController = ref.watch(appController);
-
 
     return Drawer(
       shape: RoundedRectangleBorder(
@@ -35,63 +34,65 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
             ),
           ),
           ListTile(
-            title: const Text('Refill Verbs'),
-            onTap: () {
-              VerbAppDatabase.fillVerbsFromSource();
+            title: const Text('Update Verb Source'),
+            onTap: () async {
+              await VerbAppDatabase.fillVerbsFromSource();
+              applicationController.loadSession();
+              applicationController.generateNewRandomQuestionVerb();
             },
           ),
           SizedBox(height: 7),
 
-          ListTile(
-            title: const Text('Get Incorrect Verb count'),
-            onTap: () {
-              print(VerbAppDatabase.getPreviousFailWords().length);
-            },
-          ),
-          SizedBox(height: 7),
-
-          ListTile(
-            title: const Text('Get'),
-            onTap: () {
-              ArabicVerb? v = VerbAppDatabase.getVerbByMaadi('كَتَبَ');
-              if(v != null){
-                print("vrb found - ${v.mudari} ${v.masdar}");
-              }
-            },
-          ),
-          SizedBox(height: 7),
-
-          ListTile(
-            title: const Text('Check list'),
-            onTap: () {
-              VerbAppDatabase.fetchVerbs();
-            },
-          ),
-          SizedBox(height: 7),
-
-          ListTile(
+          /*ListTile(
             title: const Text('Empty DB'),
             onTap: () {
               VerbAppDatabase.clearData();
             },
           ),
-          SizedBox(height: 7),
-
-          ListTile(
-            title: const Text('LeftWords'),
-            onTap: () {
-              applicationController.getCurrentSessionWordsLeft();
-            },
-          ),
-          SizedBox(height: 7),
+          SizedBox(height: 7),*/
 
           ListTile(
             title: const Text('Search'),
             onTap: () {
-              Navigator.of(context).popAndPushNamed(  '/search');
+              Navigator.of(context).popAndPushNamed('/search');
             },
           ),
-          SizedBox(height: 7),
+          Divider(),
+          ListTile(
+            title: const Text('Included baabs:'),
+          ),
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  ArabicTerms.baabFatahaYaftahu,
+                  style: MyTextStyles.radioArabicBaab,
+                ),
+                Switch(
+                  value: applicationController.includeBaabs.contains(ArabicTerms.baabFatahaYaftahu),
+                  onChanged: (value) {},
+                )
+              ],
+            ),
+          ),
+          ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  ArabicTerms.baabNasaraYansuru,
+                  style: MyTextStyles.radioArabicBaab,
+                ),
+                Switch(
+                  value: applicationController.includeBaabs.contains(ArabicTerms.baabNasaraYansuru),
+                  onChanged: (value) {},
+                )
+              ],
+            ),
+          ),
+
+          Divider(),
           ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -54,7 +54,7 @@ class VerbCard extends ConsumerWidget {
                 Center(
                   child: Text(
                     question,
-                    style: myTextStyles.cardTitle,
+                    style: MyTextStyles.cardTitle,
                     textDirection: TextDirection.rtl, // Right-to-left for Arabic
                   ),
                 ),
@@ -104,7 +104,7 @@ class VerbCard extends ConsumerWidget {
                       children: [
                         Text(
                           showingAnswer ? "Incorrect" : "Ask Later",
-                          style: myTextStyles.cardButton,
+                          style: MyTextStyles.cardButton,
                         ),
                       ],
                     ),
@@ -135,7 +135,7 @@ class VerbCard extends ConsumerWidget {
                       children: [
                         Text(
                           showingAnswer ? "Correct" : "Show Answer",
-                          style: myTextStyles.cardButton,
+                          style: MyTextStyles.cardButton,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
@@ -161,11 +161,11 @@ class VerbCard extends ConsumerWidget {
             children: [
               Text(
                 title,
-                style: myTextStyles.cardColumnHeading,
+                style: MyTextStyles.cardColumnHeading,
               ),
               Text(
                 ":",
-                style: myTextStyles.cardColumnHeading,
+                style: MyTextStyles.cardColumnHeading,
               ),
             ],
           ),
@@ -176,7 +176,7 @@ class VerbCard extends ConsumerWidget {
           ),
           child: Text(
             showAnswer ? value : "guess...",
-            style: myTextStyles.cardColumnValue.copyWith(
+            style: MyTextStyles.cardColumnValue.copyWith(
               fontSize: (title == 'Bengali' ? 20 :null),
               color: !showAnswer ? Colors.grey : null,
             ),
