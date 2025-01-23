@@ -43,7 +43,7 @@ class VerbCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(12),
       ),
       margin: EdgeInsets.only(
-        top: 10,
+        top: MediaQuery.of(context).orientation == Orientation.portrait ? 80 : 10,
         bottom: 10,
         right: 20,
         left: 20,

@@ -11,8 +11,6 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-
-
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -24,18 +22,18 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
             child: Text(
               'Arabic Verbs Practice Helper App',
               style: TextStyle(
-                fontSize: 20,
+                fontSize: 25,
               ),
             ),
           ),
           ListTile(
-            title: const Text('Item 1'),
+            title: const Text('Search'),
             onTap: () {
-              // Update the state of the app.
-              // ...
+              Navigator.of(context).popAndPushNamed(  '/search');
             },
           ),
 
+          SizedBox(height: 20),
           ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
