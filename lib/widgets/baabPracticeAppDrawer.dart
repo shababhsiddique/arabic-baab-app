@@ -15,6 +15,27 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final applicationController = ref.watch(appController);
 
+    List<ListTile> baabOptions = [];
+
+    for (var baab in ArabicTerms.listOfBaabs) {
+      baabOptions.add(ListTile(
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              baab,
+              style: MyTextStyles.radioArabicBaab,
+            ),
+            Switch(
+              value: applicationController.includeBaabs
+                  .contains(baab),
+              onChanged: (value) {},
+            )
+          ],
+        ),
+      ));
+    }
+
     return Drawer(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.zero,
@@ -61,37 +82,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ListTile(
             title: const Text('Included baabs:'),
           ),
-          ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  ArabicTerms.baabFatahaYaftahu,
-                  style: MyTextStyles.radioArabicBaab,
-                ),
-                Switch(
-                  value: applicationController.includeBaabs.contains(ArabicTerms.baabFatahaYaftahu),
-                  onChanged: (value) {},
-                )
-              ],
-            ),
-          ),
-          ListTile(
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  ArabicTerms.baabNasaraYansuru,
-                  style: MyTextStyles.radioArabicBaab,
-                ),
-                Switch(
-                  value: applicationController.includeBaabs.contains(ArabicTerms.baabNasaraYansuru),
-                  onChanged: (value) {},
-                )
-              ],
-            ),
-          ),
-
+          ...baabOptions,
           Divider(),
           ListTile(
             title: Row(
