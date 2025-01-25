@@ -149,40 +149,40 @@ class VerbCard extends ConsumerWidget {
       ],
     );
   }
+}
 
-  Widget createDataRow(String title, String value, bool showAnswer) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        SizedBox(
-          width: 120,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                title,
-                style: MyTextStyles.cardColumnHeading,
-              ),
-              Text(
-                ":",
-                style: MyTextStyles.cardColumnHeading,
-              ),
-            ],
+Widget createDataRow(String title, String value, bool showAnswer) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.start,
+    children: [
+      SizedBox(
+        width: 120,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: MyTextStyles.cardColumnHeading,
+            ),
+            Text(
+              ":",
+              style: MyTextStyles.cardColumnHeading,
+            ),
+          ],
+        ),
+      ),
+      Padding(
+        padding: const EdgeInsets.only(
+          left: 15,
+        ),
+        child: Text(
+          showAnswer ? value : "guess...",
+          style: MyTextStyles.cardColumnValue.copyWith(
+            fontSize: (title == 'Bengali' ? 20 :null),
+            color: !showAnswer ? Colors.grey : null,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(
-            left: 15,
-          ),
-          child: Text(
-            showAnswer ? value : "guess...",
-            style: MyTextStyles.cardColumnValue.copyWith(
-              fontSize: (title == 'Bengali' ? 20 :null),
-              color: !showAnswer ? Colors.grey : null,
-            ),
-          ),
-        )
-      ],
-    );
-  }
+      )
+    ],
+  );
 }

@@ -66,11 +66,17 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ListTile(
             title: const Text('Search'),
             onTap: () {
-
-              //Navigator.of(context).popAndPushNamed('/search');
+              Navigator.of(context).popAndPushNamed('/search');
             },
           ),
           Divider(),
+          ListTile(
+            title: const Text('View All Verbs'),
+            onTap: () {
+              Navigator.of(context).popAndPushNamed('/viewAll');
+            },
+          ),
+          SizedBox(height: 7),
           ListTile(
             title: const Text('Included baabs:'),
           ),
@@ -93,6 +99,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
                 InkWell(
                     child: Text("Dark Mode"),
                   onLongPress: () async {
+                      await VerbAppDatabase.clearData();
                     await VerbAppDatabase.fillVerbsFromSource();
                     applicationController.loadSession();
                     applicationController.generateNewRandomQuestionVerb();

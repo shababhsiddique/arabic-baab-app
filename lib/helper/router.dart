@@ -1,10 +1,10 @@
+import 'package:baab_practice/screens/all.dart';
 import 'package:baab_practice/screens/home.dart';
 import 'package:baab_practice/screens/search.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RouteGenerator {
-
   static Route<dynamic> generateRoute(RouteSettings settings) {
     // Getting arguments passed in while calling Navigator.pushNamed
     final dynamic args = settings.arguments;
@@ -12,15 +12,20 @@ class RouteGenerator {
     switch (settings.name) {
       case '/':
         return MaterialPageRoute(
-            builder: (_) => const AppHome()
+          builder: (_) => const AppHome(),
         );
       case '/search':
         return MaterialPageRoute(
-            fullscreenDialog: false,
-            builder: (_) => const SearchPage()
+          fullscreenDialog: false,
+          builder: (_) => const SearchPage(),
+        );
+      case '/viewAll':
+        return MaterialPageRoute(
+          fullscreenDialog: false,
+          builder: (_) => AllVerbsPage(),
         );
       default:
-      // If there is no such named route in the switch statement, e.g. /third
+        // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();
     }
   }
@@ -37,5 +42,4 @@ class RouteGenerator {
       );
     });
   }
-
 }

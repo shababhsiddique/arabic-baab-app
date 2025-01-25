@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:hive/hive.dart';
 import 'package:csv/csv.dart';
@@ -111,9 +112,26 @@ abstract class VerbAppDatabase {
     return false;
   }
 
-  static ArabicVerb? getVerbByMaadi(String maadi) {
+
+  static ArabicVerb? searchVerb(String searchString) {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
-    return box!.get(maadi); // Retrieve using the maadi as the key
+
+    // Normalize search input by removing harakat
+    String normalizedInput = ArabicTerms.removeHarakat(searchString);
+
+    for (var verb in box!.values) {
+      ArabicVerb arabicVerb = verb as ArabicVerb;
+
+      // Normalize stored value for comparison
+      if (ArabicTerms.removeHarakat(arabicVerb.maadi) == normalizedInput) {
+        return arabicVerb;
+      }
+      if (arabicVerb.bengaliMeaning == normalizedInput) {
+        return arabicVerb;
+      }
+    }
+
+    return null; // Return null if not found
   }
 
   static Future<void> clearData() async {

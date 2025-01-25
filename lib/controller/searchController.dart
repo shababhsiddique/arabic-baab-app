@@ -15,14 +15,43 @@ final searchController = ChangeNotifierProvider<SearchControllerState>((ref) => 
 class SearchControllerState extends ChangeNotifier {
 
 
+  ArabicVerb? searchedVerb;
+  String? searchString;
+
   //final ref;
   SearchControllerState() {
 
     loadSession();
   }
 
-  loadSession(){
+  loadSession(){}
 
+  updateSearchString(String q){
+
+    if(searchString != q){
+      print("seaching with $searchString");
+      searchString = q;
+
+      search();
+    }
+  }
+
+  search({bool forceRefresh = false}){
+    if(searchString != null && searchString != ""){
+      var result = VerbAppDatabase.searchVerb(searchString!);
+      if(result != null){
+        searchedVerb = result;
+        print("found $searchedVerb!.maadi");
+        notifyListeners();
+        return;
+      }else{
+        searchedVerb = null;
+        print("not found $searchString");
+      }
+    }
+    if(forceRefresh){
+      notifyListeners();
+    }
   }
 
 

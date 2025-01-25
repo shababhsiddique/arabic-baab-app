@@ -21,7 +21,7 @@ class AppHome extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            'Sibawaya Verbs Practice',
+            'Verbs Practice',
             style: appbarTextStyle,
           ),
         ),
@@ -35,7 +35,7 @@ class AppHome extends ConsumerWidget {
                   child: Column(
                     children: [
                       Text(
-                          "Congratulations you have finished your session",
+                        applicationController.includeBaabs.isEmpty ? "No baab selected. please select from left menu" : "Congratulations you have finished your session",
                         style: MyTextStyles.cardTitle,
                         textAlign: TextAlign.center,
                       ),
@@ -68,7 +68,7 @@ class AppHome extends ConsumerWidget {
                   question: applicationController.currentQuestionText,
                   arabicVerb: applicationController.currentQuestionVerb!,
                 )
-                    : Text("No Question Found")),
+                    : Container()),
                 Text("Currently showing ${applicationController.includeBaabs.toString()}"),
                 Text("Verbs left ${applicationController.getCurrentSessionWordsLeft()}"),
                 Text("Incorrect count ${applicationController.geCurrentIncorrectCount()}"),

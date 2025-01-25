@@ -27,7 +27,7 @@ class ArabicVerb extends HiveObject {
   int failCounter;  // For marking favorite verbs
 
   @HiveField(7)
-  bool isFavorite;  // For marking favorite verbs
+  bool isFavorite;
 
   ArabicVerb({
     required this.maadi,

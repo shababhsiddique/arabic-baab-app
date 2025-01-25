@@ -16,5 +16,11 @@ abstract class ArabicTerms {
     baabAlIfal,
     baabAlMufaala,
   ];
+
+  // Function to remove harakat (diacritics) from Arabic text
+  static String removeHarakat(String input) {
+    final harakatRegex = RegExp(r'[\u064B-\u065F\u0670]'); // Range of harakat Unicode characters
+    return input.replaceAll(harakatRegex, '');
+  }
 }
 

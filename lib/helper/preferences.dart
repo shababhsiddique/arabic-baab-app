@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:baab_practice/helper/arabic.dart';
 import 'package:flutter/material.dart';
@@ -72,7 +71,7 @@ abstract class VerbAppPreferences {
     List<String> selectedBaab = [];
 
     for(String baab in ArabicTerms.listOfBaabs){
-      if(prefs!.getBool("$baabEnabledKey_$baab")??false){
+      if(prefs!.getBool("$baabEnabledKey_$baab")??true){
         selectedBaab.add(baab);
       }
     }
