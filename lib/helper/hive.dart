@@ -7,7 +7,6 @@ import 'package:csv/csv.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/services.dart' show rootBundle;
 
-
 abstract class VerbAppDatabase {
   static Box? box;
 
@@ -39,13 +38,12 @@ abstract class VerbAppDatabase {
     return verbList;
   }
 
-
   static List<ArabicVerb> fetchVerbsByBaab(List<String> selectedBaabs) {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
     // Filter verbs where failCounter is greater than 0 (indicating incorrect attempts)
     List<ArabicVerb> selectedVerbs = [];
 
-    for( var baab in selectedBaabs){
+    for (var baab in selectedBaabs) {
       for (ArabicVerb verb in box!.values.where((verb) => verb.baab == baab)) {
         selectedVerbs.add(verb);
       }
@@ -56,7 +54,7 @@ abstract class VerbAppDatabase {
 
   static Future<bool> fillVerbsFromSource() async {
     bool success = await _fetchAndStoreFromNetwork();
-    if (!success ) {
+    if (!success) {
       print('Network failed, loading from local asset...');
       success = await _fetchAndStoreFromAssets();
     }
@@ -70,7 +68,8 @@ abstract class VerbAppDatabase {
       if (response.statusCode == 200) {
         return _processCSVData(utf8.decode(response.bodyBytes));
       } else {
-        print('Failed to load CSV from network. Status Code: ${response.statusCode}');
+        print(
+            'Failed to load CSV from network. Status Code: ${response.statusCode}');
       }
     } catch (e) {
       print('Error fetching CSV from network: $e');
@@ -117,7 +116,6 @@ abstract class VerbAppDatabase {
     return true;
   }
 
-
   static ArabicVerb? searchVerb(String searchString) {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
 
@@ -156,24 +154,32 @@ abstract class VerbAppDatabase {
     return failWords;
   }
 
-/*static Future<void> addToIncorrect(ArabicVerb verb) async {
+  static Future<void> clearFailHistory() async {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
-    await iBox!.put(verb.maadi, verb);
-  }
 
-  static Future<void> removeFromIncorrect(ArabicVerb verb) async {
-    iBox ??= Hive.box<ArabicVerb>(incorrectBox);
-    await iBox!.delete(verb.maadi);
-  }
+    // Iterate through all stored items and update failHistory
+    for (var key in box!.keys) {
+      ArabicVerb? verb = box!.get(key);
 
-  static List<ArabicVerb> fetchIncorrect() {
-    iBox ??= Hive.box<ArabicVerb>(incorrectBox);
-
-    List<ArabicVerb> verbList = [];
-
-    for (ArabicVerb verb in iBox!.values) {
-      verbList.add(verb);
+      if (verb != null) {
+        verb.failHistory =0;
+        verb.failCounter = 0;
+        await verb.save();
+      }
     }
-    return verbList;
-  }*/
+
+    print("All fail history cleared");
+  }
+
+  static List<ArabicVerb> fetchVerbsWithMistake() {
+    box ??= Hive.box<ArabicVerb>(mainVerbBox);
+    // Filter verbs where failCounter is greater than 0 (indicating incorrect attempts)
+    List<ArabicVerb> selectedVerbs = box!.values
+        .where((item) => (item as ArabicVerb).failHistory != null && (item).failHistory! > 0)
+        .cast<ArabicVerb>()
+        .toList();
+
+    return selectedVerbs;
+  }
+
 }

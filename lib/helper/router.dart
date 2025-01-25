@@ -1,4 +1,5 @@
 import 'package:baab_practice/screens/all.dart';
+import 'package:baab_practice/screens/currentMistakes.dart';
 import 'package:baab_practice/screens/home.dart';
 import 'package:baab_practice/screens/search.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,6 +25,12 @@ class RouteGenerator {
           fullscreenDialog: false,
           builder: (_) => AllVerbsPage(),
         );
+      case '/viewMistake':
+        return MaterialPageRoute(
+          fullscreenDialog: false,
+          builder: (_) => AllMistakesPage(),
+        );
+
       default:
         // If there is no such named route in the switch statement, e.g. /third
         return _errorRoute();

@@ -25,13 +25,14 @@ class ArabicVerbAdapter extends TypeAdapter<ArabicVerb> {
       exampleSentence: fields[5] as String,
       isFavorite: fields[7] as bool,
       failCounter: fields[6] as int,
+      failHistory: fields[8] as int?,
     );
   }
 
   @override
   void write(BinaryWriter writer, ArabicVerb obj) {
     writer
-      ..writeByte(8)
+      ..writeByte(9)
       ..writeByte(0)
       ..write(obj.maadi)
       ..writeByte(1)
@@ -47,7 +48,9 @@ class ArabicVerbAdapter extends TypeAdapter<ArabicVerb> {
       ..writeByte(6)
       ..write(obj.failCounter)
       ..writeByte(7)
-      ..write(obj.isFavorite);
+      ..write(obj.isFavorite)
+      ..writeByte(8)
+      ..write(obj.failHistory);
   }
 
   @override

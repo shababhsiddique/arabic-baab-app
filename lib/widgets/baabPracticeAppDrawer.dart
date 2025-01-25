@@ -78,6 +78,13 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ),
           SizedBox(height: 7),
           ListTile(
+            title: const Text('View Mistake History'),
+            onTap: () {
+              Navigator.of(context).popAndPushNamed('/viewMistake');
+            },
+          ),
+          SizedBox(height: 7),
+          ListTile(
             title: const Text('Included baabs:'),
           ),
           ...baabOptions,
@@ -87,6 +94,17 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
             onTap: () async {
               applicationController.loadSession();
               applicationController.generateNewRandomQuestionVerb();
+              Navigator.of(context).pop();
+            },
+          ),
+          SizedBox(height: 7),
+          ListTile(
+            title: const Text('Clear Mistake History'),
+            onTap: () async {
+              await VerbAppDatabase.clearFailHistory();
+              applicationController.loadSession();
+              applicationController.generateNewRandomQuestionVerb();
+              showMessage("Mistake history cleared");
               Navigator.of(context).pop();
             },
           ),

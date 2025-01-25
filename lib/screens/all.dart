@@ -1,3 +1,4 @@
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:flutter/material.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:baab_practice/helper/hive.dart';
@@ -43,11 +44,12 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
               header: const Text('Available Verbs'),
               columns: const [
                 DataColumn(label: Text('#')),
-                DataColumn(label: Text('Maadi (Past)')),
-                DataColumn(label: Text('Mudari (Present)')),
-                DataColumn(label: Text('Masdar (Verbal Noun)')),
-                DataColumn(label: Text('Baab (Pattern)')),
-                DataColumn(label: Text('Bengali Meaning')),
+                DataColumn(label: Text('${ArabicTerms.maadi} (Past)')),
+                DataColumn(label: Text('${ArabicTerms.mudari}  (Present)')),
+                DataColumn(label: Text('${ArabicTerms.masdar}  (Verbal Noun)')),
+                DataColumn(label: Text('${ArabicTerms.baab}  (Pattern)')),
+                DataColumn(label: Text('${ArabicTerms.meaning}  (Meaning)')),
+                DataColumn(label: Text('Mistake History')),
               ],
               source: VerbsDataSource(verbs),
               rowsPerPage: 10, // Number of rows per page
@@ -74,6 +76,7 @@ class VerbsDataSource extends DataTableSource {
       DataCell(Text(verb.masdar)),
       DataCell(Text(verb.baab)),
       DataCell(Text(verb.bengaliMeaning)),
+      DataCell(Text("${verb.failHistory??0}")),
     ]);
   }
 

@@ -107,6 +107,8 @@ class AppControllerState extends ChangeNotifier {
     //VerbAppDatabase.increaseVerbFail(verb);
     verb.failCounter = verb.failCounter + 1;
     verb.save();
+
+    verb.failHistory = verb.failHistory??0 + 1;
     notifyListeners();
   }
 

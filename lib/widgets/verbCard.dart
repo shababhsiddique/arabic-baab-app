@@ -160,8 +160,10 @@ Widget createDataRow(String title, String value, bool showAnswer) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
-      SizedBox(
-        width: 80,
+      Container(
+        constraints: BoxConstraints(
+          minWidth: 85
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [

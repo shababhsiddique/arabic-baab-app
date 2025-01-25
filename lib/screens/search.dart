@@ -1,5 +1,6 @@
 import 'package:baab_practice/controller/appController.dart';
 import 'package:baab_practice/controller/searchController.dart';
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/styles.dart';
 import 'package:baab_practice/widgets/baabPracticeAppDrawer.dart';
 import 'package:baab_practice/widgets/verbCard.dart';
@@ -81,21 +82,21 @@ class SearchPage extends ConsumerWidget {
                     ),
                     child: Column(
                       children: [
-                        createDataRow("Maadi",
+                        createDataRow(ArabicTerms.maadi,
                             searchControl.searchedVerb?.maadi ?? "", true),
                         SizedBox(height: 3),
-                        createDataRow("Mudari",
+                        createDataRow(ArabicTerms.mudari,
                             searchControl.searchedVerb?.mudari ?? "", true),
                         SizedBox(height: 3),
-                        createDataRow("Masdar",
+                        createDataRow(ArabicTerms.masdar,
                             searchControl.searchedVerb?.masdar ?? "", true),
                         SizedBox(height: 3),
                         createDataRow(
-                            "Bengali",
+                            ArabicTerms.meaning,
                             searchControl.searchedVerb?.bengaliMeaning ?? "",
                             true),
                         SizedBox(height: 3),
-                        createDataRow("Baab",
+                        createDataRow(ArabicTerms.baab,
                             searchControl.searchedVerb?.baab ?? "", true),
                         SizedBox(height: 8),
                       ],

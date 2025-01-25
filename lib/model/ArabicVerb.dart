@@ -29,6 +29,9 @@ class ArabicVerb extends HiveObject {
   @HiveField(7)
   bool isFavorite;
 
+  @HiveField(8)
+  int? failHistory;
+
   ArabicVerb({
     required this.maadi,
     required this.mudari,
@@ -38,6 +41,7 @@ class ArabicVerb extends HiveObject {
     this.exampleSentence = '',
     this.isFavorite = false,
     this.failCounter = 0,
+    this.failHistory = 0,
   });
 
   String pickRandomQuestion() {

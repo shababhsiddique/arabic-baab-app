@@ -1,15 +1,16 @@
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:flutter/material.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:baab_practice/helper/hive.dart';
 
-class AllVerbsPage extends StatefulWidget {
-  const AllVerbsPage({super.key});
+class AllMistakesPage extends StatefulWidget {
+  const AllMistakesPage({super.key});
 
   @override
-  _AllVerbsPageState createState() => _AllVerbsPageState();
+  _AllMistakesPageState createState() => _AllMistakesPageState();
 }
 
-class _AllVerbsPageState extends State<AllVerbsPage> {
+class _AllMistakesPageState extends State<AllMistakesPage> {
   List<ArabicVerb> verbs = [];
 
   @override
@@ -19,7 +20,7 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
   }
 
   Future<void> _loadVerbs() async {
-    List<ArabicVerb> fetchedVerbs = VerbAppDatabase.fetchVerbs();
+    List<ArabicVerb> fetchedVerbs = VerbAppDatabase.fetchVerbsWithMistake();
     setState(() {
       verbs = fetchedVerbs;
     });
@@ -28,9 +29,9 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Available Verbs Table')),
+      appBar: AppBar(title: const Text('Previous Mistakes')),
       body: verbs.isEmpty
-          ? const Center(child: CircularProgressIndicator())
+          ? Text("No mistake history found")
           : SingleChildScrollView(
             child: SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
@@ -43,11 +44,9 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
               header: const Text('Available Verbs'),
               columns: const [
                 DataColumn(label: Text('#')),
-                DataColumn(label: Text('Maadi (Past)')),
-                DataColumn(label: Text('Mudari (Present)')),
-                DataColumn(label: Text('Masdar (Verbal Noun)')),
-                DataColumn(label: Text('Baab (Pattern)')),
-                DataColumn(label: Text('Bengali Meaning')),
+                DataColumn(label: Text('${ArabicTerms.maadi} (Past)')),
+                DataColumn(label: Text('${ArabicTerms.meaning}  (Meaning)')),
+                DataColumn(label: Text('Mistake History')),
               ],
               source: VerbsDataSource(verbs),
               rowsPerPage: 10, // Number of rows per page
@@ -70,10 +69,8 @@ class VerbsDataSource extends DataTableSource {
     return DataRow(cells: [
       DataCell(Text((index + 1).toString())), // Serial number
       DataCell(Text(verb.maadi)),
-      DataCell(Text(verb.mudari)),
-      DataCell(Text(verb.masdar)),
-      DataCell(Text(verb.baab)),
       DataCell(Text(verb.bengaliMeaning)),
+      DataCell(Text("${verb.failHistory??0}")),
     ]);
   }
 
