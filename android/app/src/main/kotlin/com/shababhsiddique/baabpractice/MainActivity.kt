@@ -1,4 +1,4 @@
-package com.example.baab_practice
+package com.shababhsiddique.baabpractice
 
 import io.flutter.embedding.android.FlutterActivity
 

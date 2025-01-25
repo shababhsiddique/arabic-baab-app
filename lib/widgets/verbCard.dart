@@ -1,4 +1,5 @@
 import 'package:baab_practice/controller/appController.dart';
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/styles.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,10 @@ class VerbCard extends ConsumerWidget {
               children: [
                 // Arabic Word with Tashkeel
                 SizedBox(height: 5),
-                Center(
+                Container(
+                  alignment: Alignment.center,
+                  width: double.infinity,
+                  height: 50,
                   child: Text(
                     question,
                     style: MyTextStyles.cardTitle,
@@ -59,15 +63,15 @@ class VerbCard extends ConsumerWidget {
                   ),
                 ),
                 SizedBox(height: 10),
-                createDataRow("Maadi",  arabicVerb.maadi , showingAnswer),
+                createDataRow(ArabicTerms.maadi,  arabicVerb.maadi , showingAnswer),
                 SizedBox(height: 3),
-                createDataRow("Mudari", arabicVerb.mudari, showingAnswer),
+                createDataRow(ArabicTerms.mudari, arabicVerb.mudari, showingAnswer),
                 SizedBox(height: 3),
-                createDataRow("Masdar", arabicVerb.masdar, showingAnswer),
+                createDataRow(ArabicTerms.masdar, arabicVerb.masdar, showingAnswer),
                 SizedBox(height: 3),
-                createDataRow("Bengali", arabicVerb.bengaliMeaning, showingAnswer),
+                createDataRow(ArabicTerms.meaning, arabicVerb.bengaliMeaning, showingAnswer),
                 SizedBox(height: 3),
-                createDataRow("Baab", arabicVerb.baab, showingAnswer),
+                createDataRow(ArabicTerms.baab, arabicVerb.baab, showingAnswer),
                 SizedBox(height: 8),
               ],
             ),
@@ -152,11 +156,12 @@ class VerbCard extends ConsumerWidget {
 }
 
 Widget createDataRow(String title, String value, bool showAnswer) {
+
   return Row(
     mainAxisAlignment: MainAxisAlignment.start,
     children: [
       SizedBox(
-        width: 120,
+        width: 80,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -171,15 +176,18 @@ Widget createDataRow(String title, String value, bool showAnswer) {
           ],
         ),
       ),
-      Padding(
-        padding: const EdgeInsets.only(
-          left: 15,
-        ),
-        child: Text(
-          showAnswer ? value : "guess...",
-          style: MyTextStyles.cardColumnValue.copyWith(
-            fontSize: (title == 'Bengali' ? 20 :null),
-            color: !showAnswer ? Colors.grey : null,
+      Expanded(
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 15,
+          ),
+          child: Text(
+            showAnswer ? value : "guess...",
+            overflow: TextOverflow.ellipsis,
+            style: MyTextStyles.cardColumnValue.copyWith(
+              fontSize: (title == ArabicTerms.meaning ? 19 :null),
+              color: !showAnswer ? Colors.grey : null,
+            ),
           ),
         ),
       )

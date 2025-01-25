@@ -16,7 +16,7 @@ abstract class MyTextStyles {
   );
 
   static const TextStyle cardColumnHeading = TextStyle(
-    fontSize: 20,
+    fontSize: 24,
   );
 
   static const TextStyle cardColumnValue = TextStyle(

@@ -26,7 +26,6 @@ class AppControllerState extends ChangeNotifier {
 
   List<String> includeBaabs = List.from(VerbAppPreferences.getBaabSelection().toList());
 
-
   //final ref;
   AppControllerState() {
     isDarkmode = VerbAppPreferences.isDarkMode();
@@ -77,7 +76,6 @@ class AppControllerState extends ChangeNotifier {
         currentSessionVerbs.removeAt(currentQuestionVerbIndex);
       }
     }
-    print("reached ${currentSessionVerbs.length}");
     notifyListeners();
   }
 

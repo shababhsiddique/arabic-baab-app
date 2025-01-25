@@ -15,7 +15,7 @@ abstract class VerbAppDatabase {
   static const String verbListIndex = "verbs";
   static const String incorrectListIndex = "incorrect";
   static const String sourceCSVURL =
-      'https://docs.google.com/aspreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=728929932&single=true&output=csv';
+      'https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=728929932&single=true&output=csv';
   static const String localCSVPath = 'assets/verbs_all.csv';
 
   static Future<Box?> initHive() async {

@@ -7,6 +7,12 @@ abstract class ArabicTerms {
   static const baabAlIfal = 'الْإِفْعَالْ';
   static const baabAlMufaala = 'اَلْمُفَاعَلَةُ';
 
+  static const maadi = 'ماضي';
+  static const mudari = 'مضارع';
+  static const baab = 'باب';
+  static const meaning = 'معنى';
+  static const masdar = 'المصدر';
+
   static const listOfBaabs = [
     baabFatahaYaftahu,
     baabNasaraYansuru,
