@@ -24,10 +24,7 @@ class AppControllerState extends ChangeNotifier {
 
   bool showAnswer = false;
 
-  List<String> includeBaabs = [
-    ArabicTerms.baabFatahaYaftahu,
-    ArabicTerms.baabNasaraYansuru,
-  ];
+  List<String> includeBaabs = List.from(VerbAppPreferences.getBaabSelection().toList());
 
 
   //final ref;
@@ -37,6 +34,7 @@ class AppControllerState extends ChangeNotifier {
   }
 
   loadSession(){
+    print("current $includeBaabs");
     currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
 
     if(currentQuestionVerb == null && currentSessionVerbs.isNotEmpty){
@@ -117,5 +115,28 @@ class AppControllerState extends ChangeNotifier {
   int geCurrentIncorrectCount(){
     return VerbAppDatabase.getPreviousFailWords().length;
   }
+
+  updateBaabSelection({required String baab,required bool enable}){
+
+    VerbAppPreferences.updateBaabSelection(baab: baab, enable: enable);
+
+    if(includeBaabs.contains(baab) && enable == false){
+      if(includeBaabs.length == 1){
+        return false;
+      }
+      includeBaabs.remove(baab);
+    }
+    if(includeBaabs.contains(baab)==false && enable == true){
+      includeBaabs.add(baab);
+    }
+    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+
+    if(currentSessionVerbs.isNotEmpty){
+      generateNewRandomQuestionVerb();
+    }
+    //notifyListeners();
+  }
+
+
 
 }

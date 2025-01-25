@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:baab_practice/helper/arabic.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,6 +13,7 @@ abstract class VerbAppPreferences {
   static const themeLight = 'light';
   static const themeDark = 'dark';
   static const themeSystemDefault = 'system';
+  static const baabEnabledKey_ = 'baabEnable_';
 
   static Future<SharedPreferences?> initializePreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -65,4 +67,21 @@ abstract class VerbAppPreferences {
       return false;
     }
   }
+
+  static List<String> getBaabSelection() {
+    List<String> selectedBaab = [];
+
+    for(String baab in ArabicTerms.listOfBaabs){
+      if(prefs!.getBool("$baabEnabledKey_$baab")??false){
+        selectedBaab.add(baab);
+      }
+    }
+    
+    return selectedBaab;
+  }
+
+  static updateBaabSelection({required String baab,required bool enable}) {
+    prefs!.setBool("$baabEnabledKey_$baab", enable);
+  }
+
 }

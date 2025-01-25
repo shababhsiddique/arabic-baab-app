@@ -17,6 +17,12 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
 
     List<ListTile> baabOptions = [];
 
+    showMessage(String message){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+      ));
+    }
+
     for (var baab in ArabicTerms.listOfBaabs) {
       baabOptions.add(ListTile(
         title: Row(
@@ -29,7 +35,10 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
             Switch(
               value: applicationController.includeBaabs
                   .contains(baab),
-              onChanged: (value) {},
+              onChanged: (value) {
+                applicationController.updateBaabSelection(baab: baab, enable: value);
+                showMessage("Updated word pool");
+              },
             )
           ],
         ),
@@ -55,27 +64,10 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
             ),
           ),
           ListTile(
-            title: const Text('Update Verb Source'),
-            onTap: () async {
-              await VerbAppDatabase.fillVerbsFromSource();
-              applicationController.loadSession();
-              applicationController.generateNewRandomQuestionVerb();
-            },
-          ),
-          SizedBox(height: 7),
-
-          /*ListTile(
-            title: const Text('Empty DB'),
-            onTap: () {
-              VerbAppDatabase.clearData();
-            },
-          ),
-          SizedBox(height: 7),*/
-
-          ListTile(
             title: const Text('Search'),
             onTap: () {
-              Navigator.of(context).popAndPushNamed('/search');
+
+              //Navigator.of(context).popAndPushNamed('/search');
             },
           ),
           Divider(),
@@ -85,10 +77,28 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ...baabOptions,
           Divider(),
           ListTile(
+            title: const Text('Restart session'),
+            onTap: () async {
+              applicationController.loadSession();
+              applicationController.generateNewRandomQuestionVerb();
+              Navigator.of(context).pop();
+            },
+          ),
+          SizedBox(height: 7),
+
+          ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Dark Mode"),
+                InkWell(
+                    child: Text("Dark Mode"),
+                  onLongPress: () async {
+                    await VerbAppDatabase.fillVerbsFromSource();
+                    applicationController.loadSession();
+                    applicationController.generateNewRandomQuestionVerb();
+                    print("updated verb source");
+                  },
+                ),
                 Switch(
                   value: applicationController.isDarkmode,
                   onChanged: (value) {

@@ -69,7 +69,7 @@ class AppHome extends ConsumerWidget {
                   arabicVerb: applicationController.currentQuestionVerb!,
                 )
                     : Text("No Question Found")),
-                Text("Currently showing ALL"),
+                Text("Currently showing ${applicationController.includeBaabs.toString()}"),
                 Text("Verbs left ${applicationController.getCurrentSessionWordsLeft()}"),
                 Text("Incorrect count ${applicationController.geCurrentIncorrectCount()}"),
               ],
