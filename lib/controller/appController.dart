@@ -102,13 +102,12 @@ class AppControllerState extends ChangeNotifier {
     }
   }
 
-  addToIncorrect(ArabicVerb verb){
+  addToIncorrect(ArabicVerb verb) async {
 
     //VerbAppDatabase.increaseVerbFail(verb);
-    verb.failCounter = verb.failCounter + 1;
-    verb.save();
-
-    verb.failHistory = verb.failHistory??0 + 1;
+    verb.failCounter += 1;
+    verb.failHistory = (verb.failHistory ?? 0) + 1;
+    await verb.save();
     notifyListeners();
   }
 

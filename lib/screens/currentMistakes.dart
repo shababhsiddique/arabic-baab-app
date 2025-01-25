@@ -44,9 +44,12 @@ class _AllMistakesPageState extends State<AllMistakesPage> {
               header: const Text('Available Verbs'),
               columns: const [
                 DataColumn(label: Text('#')),
+                DataColumn(label: Text('Mistakes Count')),
                 DataColumn(label: Text('${ArabicTerms.maadi} (Past)')),
+                DataColumn(label: Text('${ArabicTerms.baab}  (Pattern)')),
                 DataColumn(label: Text('${ArabicTerms.meaning}  (Meaning)')),
-                DataColumn(label: Text('Mistake History')),
+                DataColumn(label: Text('${ArabicTerms.mudari}  (Present)')),
+                DataColumn(label: Text('${ArabicTerms.masdar}  (Verbal Noun)')),
               ],
               source: VerbsDataSource(verbs),
               rowsPerPage: 10, // Number of rows per page
@@ -67,10 +70,14 @@ class VerbsDataSource extends DataTableSource {
   DataRow getRow(int index) {
     final verb = verbs[index];
     return DataRow(cells: [
-      DataCell(Text((index + 1).toString())), // Serial number
+      DataCell(Text((index + 1).toString())),
+      DataCell(Text("${verb.failHistory??0}")),// Serial number
       DataCell(Text(verb.maadi)),
+      DataCell(Text(verb.baab)),
+      DataCell(Text(verb.mudari)),
+      DataCell(Text(verb.masdar)),
       DataCell(Text(verb.bengaliMeaning)),
-      DataCell(Text("${verb.failHistory??0}")),
+
     ]);
   }
 
