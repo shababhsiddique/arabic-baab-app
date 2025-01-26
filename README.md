@@ -28,9 +28,9 @@
 Get the app on your favorite platform:
 
 ### Android (Google Play Store)
-[![Get it on Google Play](https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg)](https://play.google.com/store/apps/details?id=your.app.package)
+[![Get it on Google Play](https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg)](https://play.google.com/store/apps/details?id=com.shababhsiddique.baabpractice)
 
-### iOS (Apple App Store)
+### iOS (Apple App Store) (coming soon)
 [![Download on the App Store](https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/app/id123456789)
 
 ### Web (using any browser)
