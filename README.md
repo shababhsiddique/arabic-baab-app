@@ -18,8 +18,12 @@
 
 আপনার guess করা উত্তর এর সাথে সঠিক উত্তর মাইল গেলে Correct নাহলে Incorrect চাপুন। আপনার ভুল উত্তর দেয় শব্দগুলো পরবর্তীতে আবার randomly আপনাকে জিজ্ঞেস করা হবে যতক্ষণ আপনি সঠিক উত্তর না দিতে পারেন।  
 
+![mistake_history.png](docs/assets/mistake_history.png)
 
-### 📲 Download On Mobile
+আপনি আপনার বেশী ভুল হওয়া শব্দ গুলো একসাথে দেখতে পারবেন মেনু > ভিউ মিসটেক হিস্ট্রি থেকে 
+
+
+### 📲 Get the App
 
 Get the app on your favorite platform:
 
@@ -29,9 +33,29 @@ Get the app on your favorite platform:
 ### iOS (Apple App Store)
 [![Download on the App Store](https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg)](https://apps.apple.com/app/id123456789)
 
+### Web (using any browser)
+[On Browser](https://shababhsiddique.github.io/arabic-baab-app/)
+
+
+### Deploy
+
+For deploying the web version
+
+`
+flutter build web --release --base-href="/arabic-baab-app/"
+`
+And copy everything from build/web to docs/
+privacy policy exist on docs do not delete it.
+
+For building app bundle for Google Play Store
+
+`
+flutter build appbundle --release
+`
+
 
 ### Thanks
 
-অ্যাপটি এর মধ্যে ব্যবহার করা আরবি ডাটা সম্পূর্ণ নিজের এন্ট্রি করা। কোন বানান ভুল অথবা অর্থ ভুল পেলে, কিংবা অ্যাপ এ কোন ত্রুটি চোখে পড়লে https://github.com/shababhsiddique/arabic-baab-app/issues এখানে জানানোর অনুরোধ রইল। 
+অ্যাপটির মধ্যে ব্যবহার করা আরবি কোন বানান ভুল অথবা অর্থ ভুল পেলে, কিংবা অ্যাপ এ কোন ত্রুটি চোখে পড়লে https://github.com/shababhsiddique/arabic-baab-app/issues এখানে জানানোর অনুরোধ রইল। 
 
 ধন্যবাদ 

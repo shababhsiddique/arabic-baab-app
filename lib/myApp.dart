@@ -12,6 +12,8 @@ class BaabPracticeApp extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final applicationController = ref.watch(appController);
 
+    applicationController.getAppVersion();
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         themeMode: applicationController.isDarkmode ? ThemeMode.dark : ThemeMode

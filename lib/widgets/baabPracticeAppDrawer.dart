@@ -57,7 +57,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               color: Colors.blue,
             ),
             child: Text(
-              'Arabic Verbs Practice Helper App',
+              'Arabic Verbs Practice Helper App ',
               style: TextStyle(
                 fontSize: 25,
               ),
@@ -133,6 +133,12 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               ],
             ),
           ),
+          Text(
+            "v${applicationController.appVersion}",
+            style: TextStyle(
+              fontSize: 15,
+            ),
+          )
         ],
       ),
     );

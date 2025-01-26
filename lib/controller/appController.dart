@@ -8,6 +8,7 @@ import 'package:baab_practice/helper/preferences.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 final appController = ChangeNotifierProvider<AppControllerState>((ref) => AppControllerState());
 
@@ -23,6 +24,8 @@ class AppControllerState extends ChangeNotifier {
   int currentQuestionVerbIndex = -1;
 
   bool showAnswer = false;
+
+  String appVersion ="";
 
   List<String> includeBaabs = List.from(VerbAppPreferences.getBaabSelection().toList());
 
@@ -51,6 +54,13 @@ class AppControllerState extends ChangeNotifier {
 
     print("app state initiated");
 
+  }
+
+  getAppVersion(){
+    PackageInfo.fromPlatform().then((val){
+      appVersion = "${val.version}(${val.buildNumber})";
+      notifyListeners();
+    });
   }
 
   void toggleDarkMode(){
