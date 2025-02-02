@@ -3,8 +3,8 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"flutter_bootstrap.js": "7d4cd6ed611936482f5730cbea55c151",
-"version.json": "cbdba769306c6980c0f2d88f05942cb5",
+const RESOURCES = {"flutter_bootstrap.js": "109909d9fe1e9b79d1b1d65e9992cb28",
+"version.json": "d3ee47a254de511ea6816ac493159263",
 "index.html": "df56314972962ea5e4d48e327275bb53",
 "/": "df56314972962ea5e4d48e327275bb53",
 "main.dart.js": "269f44759a55099bae0e027d5a6d016f",
@@ -24,7 +24,7 @@ const RESOURCES = {"flutter_bootstrap.js": "7d4cd6ed611936482f5730cbea55c151",
 "assets/AssetManifest.bin": "a6d14ea5323e795f3226f71c78455a8b",
 "assets/fonts/MaterialIcons-Regular.otf": "0db35ae7a415370b89e807027510caf0",
 "assets/assets/images/verb_app_icon.png": "0857e155c670c9fc852fce1565c4989f",
-"assets/assets/verbs_all.csv": "05622b36fc7a8d093e1160c9ddda2755",
+"assets/assets/verbs_all.csv": "563e2590871f539963fec56aa5a9eea8",
 "canvaskit/skwasm.js": "ac0f73826b925320a1e9b0d3fd7da61c",
 "canvaskit/skwasm.js.symbols": "96263e00e3c9bd9cd878ead867c04f3c",
 "canvaskit/canvaskit.js.symbols": "efc2cd87d1ff6c586b7d4c7083063a40",
