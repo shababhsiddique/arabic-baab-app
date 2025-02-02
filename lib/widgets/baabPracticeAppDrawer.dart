@@ -85,6 +85,21 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ),
           SizedBox(height: 7),
           ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Practice Mistakes Only"),
+                Switch(
+                  value: applicationController.practiceMistakesOnly,
+                  onChanged: (value) {
+                    applicationController.toggleMistakeOnlyMode();
+                  },
+                )
+              ],
+            ),
+          ),
+          SizedBox(height: 7),
+          ListTile(
             title: const Text('Included baabs:'),
           ),
           ...baabOptions,
@@ -135,6 +150,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ),
           Text(
             "v${applicationController.appVersion}",
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 15,
             ),

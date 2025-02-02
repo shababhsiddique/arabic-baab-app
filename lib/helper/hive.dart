@@ -38,13 +38,16 @@ abstract class VerbAppDatabase {
     return verbList;
   }
 
-  static List<ArabicVerb> fetchVerbsByBaab(List<String> selectedBaabs) {
+  static List<ArabicVerb> fetchVerbsByBaab(List<String> selectedBaabs,
+      {bool mistakeOnly = false}) {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
     // Filter verbs where failCounter is greater than 0 (indicating incorrect attempts)
     List<ArabicVerb> selectedVerbs = [];
 
     for (var baab in selectedBaabs) {
-      for (ArabicVerb verb in box!.values.where((verb) => verb.baab == baab)) {
+      for (ArabicVerb verb in box!.values.where((verb) =>
+      verb.baab == baab &&
+          (!mistakeOnly || (verb.failHistory ?? 0) > 0))) {
         selectedVerbs.add(verb);
       }
     }

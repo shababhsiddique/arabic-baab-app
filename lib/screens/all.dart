@@ -64,7 +64,10 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
 class VerbsDataSource extends DataTableSource {
   final List<ArabicVerb> verbs;
 
-  VerbsDataSource(this.verbs);
+  VerbsDataSource(this.verbs){
+    // Sort the selectedVerbs list by the baab column
+    verbs.sort((a, b) => a.baab.compareTo(b.baab));
+  }
 
   @override
   DataRow getRow(int index) {

@@ -26,6 +26,7 @@ class AppControllerState extends ChangeNotifier {
   bool showAnswer = false;
 
   String appVersion ="";
+  bool practiceMistakesOnly = false;
 
   List<String> includeBaabs = List.from(VerbAppPreferences.getBaabSelection().toList());
 
@@ -37,7 +38,7 @@ class AppControllerState extends ChangeNotifier {
 
   loadSession(){
     print("current $includeBaabs");
-    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
 
     if(currentQuestionVerb == null && currentSessionVerbs.isNotEmpty){
       generateNewRandomQuestionVerb();
@@ -46,7 +47,7 @@ class AppControllerState extends ChangeNotifier {
     //this if data was emptyl;
     if(currentSessionVerbs.isEmpty){
       VerbAppDatabase.fillVerbsFromSource().then((v){
-        currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+        currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
         generateNewRandomQuestionVerb();
         notifyListeners();
       });
@@ -72,6 +73,13 @@ class AppControllerState extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void toggleMistakeOnlyMode(){
+    practiceMistakesOnly = !practiceMistakesOnly;
+    loadSession();
+    notifyListeners();
+  }
+
 
   getCurrentSessionWordsLeft(){
     return currentSessionVerbs.length;
@@ -138,7 +146,7 @@ class AppControllerState extends ChangeNotifier {
     if(includeBaabs.contains(baab)==false && enable == true){
       includeBaabs.add(baab);
     }
-    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
 
     if(currentSessionVerbs.isNotEmpty){
       generateNewRandomQuestionVerb();

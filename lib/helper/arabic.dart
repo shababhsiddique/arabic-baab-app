@@ -6,6 +6,7 @@ abstract class ArabicTerms {
   static const baabDarabaYadribu = 'ضَرَبَ';
   static const baabAlIfal = 'الْإِفْعَالْ';
   static const baabAlMufaala = 'اَلْمُفَاعَلَةُ';
+  static const baabAlTafil = 'التَّفْعِيلُ';
 
   static const maadi = 'ماضي';
   static const mudari = 'مضارع';
@@ -21,6 +22,7 @@ abstract class ArabicTerms {
     baabDarabaYadribu,
     baabAlIfal,
     baabAlMufaala,
+    baabAlTafil,
   ];
 
   // Function to remove harakat (diacritics) from Arabic text
