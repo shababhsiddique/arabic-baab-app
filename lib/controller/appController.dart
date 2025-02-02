@@ -26,7 +26,7 @@ class AppControllerState extends ChangeNotifier {
   bool showAnswer = false;
 
   String appVersion ="";
-  bool practiceMistakesOnly = false;
+  bool practiceMistakesOnly = VerbAppPreferences.getBool(VerbAppPreferences.practiceMistakesOnlyMode);
 
   List<String> includeBaabs = List.from(VerbAppPreferences.getBaabSelection().toList());
 
@@ -76,7 +76,9 @@ class AppControllerState extends ChangeNotifier {
 
   void toggleMistakeOnlyMode(){
     practiceMistakesOnly = !practiceMistakesOnly;
+    VerbAppPreferences.setBool(VerbAppPreferences.practiceMistakesOnlyMode, practiceMistakesOnly);
     loadSession();
+    generateNewRandomQuestionVerb();
     notifyListeners();
   }
 

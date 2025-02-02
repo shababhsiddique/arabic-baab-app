@@ -13,6 +13,7 @@ abstract class VerbAppPreferences {
   static const themeDark = 'dark';
   static const themeSystemDefault = 'system';
   static const baabEnabledKey_ = 'baabEnable_';
+  static const practiceMistakesOnlyMode = 'mistakesOnly';
 
   static Future<SharedPreferences?> initializePreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -37,6 +38,13 @@ abstract class VerbAppPreferences {
 
   static setBool(String key, bool value) {
     return prefs!.setBool(key, value);
+  }
+
+  static getBool(String key) {
+    if(prefs!.containsKey(key)){
+      return prefs!.getBool(key);
+    }
+    return false;
   }
 
   static setInt(String key, int value) {
