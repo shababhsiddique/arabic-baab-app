@@ -41,7 +41,6 @@ class _AllMistakesPageState extends State<AllMistakesPage> {
             ),
             width: MediaQuery.of(context).size.width,
             child: PaginatedDataTable(
-              header: const Text('Available Verbs'),
               columns: const [
                 DataColumn(label: Text('#')),
                 DataColumn(label: Text('Mistakes Count')),

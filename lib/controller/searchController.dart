@@ -16,6 +16,7 @@ class SearchControllerState extends ChangeNotifier {
 
 
   ArabicVerb? searchedVerb;
+  List<ArabicVerb> searchedVerbs = [];
   String? searchString;
 
   //final ref;
@@ -39,15 +40,17 @@ class SearchControllerState extends ChangeNotifier {
   search({bool forceRefresh = false}){
     if(searchString != null && searchString != ""){
       var result = VerbAppDatabase.searchVerb(searchString!);
-      if(result != null){
-        searchedVerb = result;
-        print("found $searchedVerb!.maadi");
+      if(result.isNotEmpty){
+        searchedVerbs = result;
+        print("found $searchString ${searchedVerbs.length} results");
         notifyListeners();
         return;
       }else{
-        searchedVerb = null;
+        searchedVerbs = [];
         print("not found $searchString");
       }
+    }else{
+      searchedVerbs = [];
     }
     if(forceRefresh){
       notifyListeners();

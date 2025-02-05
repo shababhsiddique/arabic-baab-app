@@ -32,4 +32,9 @@ abstract class MyTextStyles {
   static const TextStyle radioArabicBaab = TextStyle(
       fontSize: 24,
   );
+
+  static const TextStyle datatableHeader = TextStyle(
+    fontWeight: FontWeight.bold,
+  );
+
 }

@@ -1,4 +1,5 @@
 import 'package:baab_practice/helper/arabic.dart';
+import 'package:baab_practice/helper/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:baab_practice/helper/hive.dart';
@@ -11,7 +12,7 @@ class AllVerbsPage extends StatefulWidget {
 }
 
 class _AllVerbsPageState extends State<AllVerbsPage> {
-  List<ArabicVerb> verbs = [];
+  late final List<ArabicVerb> verbs ;
 
   @override
   void initState() {
@@ -41,15 +42,14 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
             ),
             width: MediaQuery.of(context).size.width,
             child: PaginatedDataTable(
-              header: const Text('Available Verbs'),
               columns: const [
-                DataColumn(label: Text('#')),
-                DataColumn(label: Text('${ArabicTerms.maadi} (Past)')),
-                DataColumn(label: Text('${ArabicTerms.mudari}  (Present)')),
-                DataColumn(label: Text('${ArabicTerms.masdar}  (Verbal Noun)')),
-                DataColumn(label: Text('${ArabicTerms.baab}  (Pattern)')),
-                DataColumn(label: Text('${ArabicTerms.meaning}  (Meaning)')),
-                DataColumn(label: Text('Mistake History')),
+                DataColumn(label: Text('#', style: MyTextStyles.datatableHeader,)),
+                DataColumn(label: Text(ArabicTerms.maadi, style: MyTextStyles.datatableHeader,)),
+                DataColumn(label: Text(ArabicTerms.mudari, style: MyTextStyles.datatableHeader,)),
+                DataColumn(label: Text(ArabicTerms.masdar, style: MyTextStyles.datatableHeader,)),
+                DataColumn(label: Text(ArabicTerms.baab, style: MyTextStyles.datatableHeader,)),
+                DataColumn(label: Text(ArabicTerms.meaning, style: MyTextStyles.datatableHeader,)),
+                DataColumn(label: Text('Mistake History', style: MyTextStyles.datatableHeader,)),
               ],
               source: VerbsDataSource(verbs),
               rowsPerPage: 10, // Number of rows per page

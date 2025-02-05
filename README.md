@@ -8,17 +8,17 @@
 
 প্রাকটিস এর জন্য মেনু থেকে নির্দিষ্ট বাব enable/disable করতে পারবেন।
 
-![current_baab.png](docs/assets/current_baab.png)
+![current_baab.png](public/images/current_baab.png)
 
 প্রেকটিস মুড এ আপনাকে একটা random শব্দ দিয়ে প্রশ্ন করা হবে, আপনাকে তার মাদী, মুদারি, মাসদার, অর্থ এবং ব্যাব বের করতে হবে 
-![question.png](docs/assets/question.png)
+![question.png](public/images/question.png)
 
 আপনার উত্তর চিন্তা করা হলে/বলা হলে show answer চাপুন। 
-![answer.png](docs/assets/answer.png)
+![answer.png](public/images/answer.png)
 
 আপনার guess করা উত্তর এর সাথে সঠিক উত্তর মাইল গেলে Correct নাহলে Incorrect চাপুন। আপনার ভুল উত্তর দেয় শব্দগুলো পরবর্তীতে আবার randomly আপনাকে জিজ্ঞেস করা হবে যতক্ষণ আপনি সঠিক উত্তর না দিতে পারেন।  
 
-![mistake_history.png](docs/assets/mistake_history.png)
+![mistake_history.png](public/images/mistake_history.png)
 
 আপনি আপনার বেশী ভুল হওয়া শব্দ গুলো একসাথে দেখতে পারবেন মেনু > ভিউ মিসটেক হিস্ট্রি থেকে 
 
@@ -53,6 +53,11 @@ For building app bundle for Google Play Store
 flutter build appbundle --release
 `
 
+To get list of verbs as csv from remote source. Same format as bundled csv.
+
+`
+curl -L "https://docs.google.com/spreadsheets/d/e/2PACX-1vSJoUk2VttAgxByuYVMPDNPc1I8YdpgEYOqql3xqFeJ7RxI1pLkaNrkc2pAi721c1a7bnNIxyfl56g2/pub?gid=728929932&single=true&output=csv" > "verbs_all.csv"
+`
 
 ### Thanks
 

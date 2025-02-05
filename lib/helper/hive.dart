@@ -119,25 +119,36 @@ abstract class VerbAppDatabase {
     return true;
   }
 
-  static ArabicVerb? searchVerb(String searchString) {
+  static List<ArabicVerb> searchVerb(String searchString) {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
 
     // Normalize search input by removing harakat
-    String normalizedInput = ArabicTerms.removeHarakat(searchString);
+    String normalizedInput = ArabicTerms.removeHarakat(searchString.trim());
+    List<ArabicVerb> result = [];
 
     for (var verb in box!.values) {
       ArabicVerb arabicVerb = verb as ArabicVerb;
 
-      // Normalize stored value for comparison
-      if (ArabicTerms.removeHarakat(arabicVerb.maadi) == normalizedInput) {
-        return arabicVerb;
+      //search by maadi
+      if (ArabicTerms.removeHarakat(arabicVerb.maadi).contains(normalizedInput)) {
+        if(ArabicTerms.removeHarakat(arabicVerb.maadi) == normalizedInput){
+          result.insert(0, arabicVerb);
+        }else{
+          result.add(arabicVerb);
+        }
       }
-      if (arabicVerb.bengaliMeaning == normalizedInput) {
-        return arabicVerb;
+
+      //search by bengali
+      if (arabicVerb.bengaliMeaning.contains(normalizedInput)) {
+        if (arabicVerb.bengaliMeaning == normalizedInput){
+          result.insert(0, arabicVerb);
+        }else{
+          result.add(arabicVerb);
+        }
       }
     }
 
-    return null; // Return null if not found
+    return result; // Return null if not found
   }
 
   static Future<void> clearData() async {
