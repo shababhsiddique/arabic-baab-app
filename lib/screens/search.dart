@@ -7,17 +7,35 @@ import 'package:baab_practice/widgets/verbCard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SearchPage extends ConsumerWidget {
-  const SearchPage({
-    super.key,
-  });
+class SearchPage extends ConsumerStatefulWidget {
+  const SearchPage({super.key});
 
   @override
-  Widget build(BuildContext context, ref) {
-    final searchControl = ref.watch(searchController);
+  _SearchPageState createState() => _SearchPageState();
+}
 
-    TextEditingController _searchBoxController =
-        TextEditingController(text: searchControl.searchString);
+class _SearchPageState extends ConsumerState<SearchPage> {
+  late TextEditingController _searchBoxController;
+  late FocusNode _searchFocusNode;
+
+  @override
+  void initState() {
+    super.initState();
+    final searchControl = ref.read(searchController);
+    _searchBoxController = TextEditingController(text: searchControl.searchString);
+    _searchFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _searchBoxController.dispose();
+    _searchFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final searchControl = ref.watch(searchController);
 
     return SafeArea(
       child: Scaffold(
@@ -32,56 +50,47 @@ class SearchPage extends ConsumerWidget {
             child: Column(
               children: [
                 Container(
-                  constraints: BoxConstraints(
-                    maxWidth: 500,
-                  ),
-                  padding: EdgeInsets.symmetric(
-                    vertical: 5,
-                  ),
+                  constraints: BoxConstraints(maxWidth: 500),
+                  padding: EdgeInsets.symmetric(vertical: 5),
                   child: TextField(
                     autofocus: true,
+                    focusNode: _searchFocusNode, // Preserve focus
                     textAlign: TextAlign.center,
                     controller: _searchBoxController,
                     decoration: InputDecoration(
                       hintText: 'حمل/বহন করা...',
                       prefixIcon: InkWell(
                         child: Icon(Icons.search),
-                        onTap: (){
-                          searchControl.search(
-                            forceRefresh: true
-                          );
+                        onTap: () {
+                          searchControl.search(forceRefresh: true);
+                          _searchFocusNode.requestFocus(); // Keep focus after clicking search
                         },
                       ),
                     ),
                     onChanged: (query) {
                       searchControl.updateSearchString(query);
+                      _searchFocusNode.requestFocus(); // Keep focus on every change
                     },
                   ),
                 ),
                 SingleChildScrollView(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 5,
-                        vertical: 0,
-                      ),
-                      width: MediaQuery.of(context).size.width,
-                      child: PaginatedDataTable(
-                        columns: const [
-                          DataColumn(label: Text(ArabicTerms.maadi, style: MyTextStyles.datatableHeader,)),
-                          DataColumn(label: Text(ArabicTerms.meaning, style: MyTextStyles.datatableHeader,)),
-                          DataColumn(label: Text(ArabicTerms.mudari, style: MyTextStyles.datatableHeader,)),
-                          DataColumn(label: Text(ArabicTerms.masdar, style: MyTextStyles.datatableHeader,)),
-                          DataColumn(label: Text(ArabicTerms.baab, style: MyTextStyles.datatableHeader,)),
-                        ],
-                        source: VerbsDataSource(searchControl.searchedVerbs),
-                        rowsPerPage: 9, // Number of rows per page
-                      ),
+                  scrollDirection: Axis.horizontal,
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                    width: MediaQuery.of(context).size.width,
+                    child: PaginatedDataTable(
+                      columns: const [
+                        DataColumn(label: Text(ArabicTerms.maadi, style: MyTextStyles.datatableHeader)),
+                        DataColumn(label: Text(ArabicTerms.meaning, style: MyTextStyles.datatableHeader)),
+                        DataColumn(label: Text(ArabicTerms.mudari, style: MyTextStyles.datatableHeader)),
+                        DataColumn(label: Text(ArabicTerms.masdar, style: MyTextStyles.datatableHeader)),
+                        DataColumn(label: Text(ArabicTerms.baab, style: MyTextStyles.datatableHeader)),
+                      ],
+                      source: VerbsDataSource(searchControl.searchedVerbs),
+                      rowsPerPage: 9, // Number of rows per page
                     ),
                   ),
-                )
-                //SearchWordCard(searchControl: searchControl)
+                ),
               ],
             ),
           ),
@@ -90,6 +99,7 @@ class SearchPage extends ConsumerWidget {
     );
   }
 }
+
 
 class VerbsDataSource extends DataTableSource {
   final List<ArabicVerb> verbs;
@@ -122,7 +132,7 @@ class VerbsDataSource extends DataTableSource {
   int get selectedRowCount => 0;
 }
 
-
+/*
 class SearchWordCard extends StatelessWidget {
   const SearchWordCard({
     super.key,
@@ -180,3 +190,4 @@ class SearchWordCard extends StatelessWidget {
     );
   }
 }
+*/
