@@ -9,6 +9,7 @@ import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:update_available/update_available.dart';
 
 final appController = ChangeNotifierProvider<AppControllerState>((ref) => AppControllerState());
 
@@ -16,6 +17,7 @@ final appController = ChangeNotifierProvider<AppControllerState>((ref) => AppCon
 class AppControllerState extends ChangeNotifier {
 
   bool isDarkmode = true;
+  bool? checkUpdate;
 
   List<ArabicVerb> currentSessionVerbs = [];
 
@@ -55,6 +57,23 @@ class AppControllerState extends ChangeNotifier {
 
     print("app state initiated");
 
+  }
+
+
+  checkAppUpdateAvailable({required showUpdateAlert}) async {
+    print("called check");
+    checkUpdate = true;
+
+    var availability = await getUpdateAvailability();
+    String text = switch (availability) {
+      UpdateAvailable() => "There's an update available!",
+      NoUpdateAvailable() => "There's no update available!",
+      UnknownAvailability() => "Sorry, couldn't determine if there is or not an available update!",
+    };
+
+    if (text == "There's an update available!") {
+      showUpdateAlert();
+    }
   }
 
   getAppVersion(){

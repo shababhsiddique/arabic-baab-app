@@ -1,5 +1,6 @@
 import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/styles.dart';
+import 'package:baab_practice/widgets/verbdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:baab_practice/helper/hive.dart';
@@ -51,7 +52,7 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
                 DataColumn(label: Text(ArabicTerms.meaning, style: MyTextStyles.datatableHeader,)),
                 DataColumn(label: Text('Mistake History', style: MyTextStyles.datatableHeader,)),
               ],
-              source: VerbsDataSource(verbs),
+              source: VerbsDataSource(verbs, context),
               rowsPerPage: 10, // Number of rows per page
             ),
                     ),
@@ -63,8 +64,9 @@ class _AllVerbsPageState extends State<AllVerbsPage> {
 
 class VerbsDataSource extends DataTableSource {
   final List<ArabicVerb> verbs;
+  final BuildContext context;
 
-  VerbsDataSource(this.verbs){
+  VerbsDataSource(this.verbs, this.context){
     // Sort the selectedVerbs list by the baab column
     verbs.sort((a, b) => a.baab.compareTo(b.baab));
   }

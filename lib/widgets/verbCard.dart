@@ -133,6 +133,28 @@ class VerbCard extends ConsumerWidget {
                         applicationControl.setShowAnswer(false);
                         applicationControl.generateNewRandomQuestionVerb();
                       }
+
+                      if(applicationControl.checkUpdate != true){
+                        applicationControl.checkAppUpdateAvailable(
+                            showUpdateAlert: (){
+                              showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                  title: Text("Update Available!"),
+                                  content: Text("There is a new version available. Please update app from store to enjoy more words and features."),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: (){
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("OK"),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            }
+                        );
+                      }
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
