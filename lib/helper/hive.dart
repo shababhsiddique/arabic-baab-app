@@ -106,12 +106,15 @@ abstract class VerbAppDatabase {
         masdar: row[2].toString(),
         bengaliMeaning: row[3].toString(),
         baab: row[4].toString(),
+        amr: row[5].toString(),
+        nahi: row[6].toString(),
       );
 
       var existingVerb = box!.get(verb.maadi);
 
       //only insert verb if not exist when reading local source, no need to update.
-      if (existingVerb == null) {
+      //update database if amr was empty (new column since version 1.1.0)
+      if (existingVerb == null || existingVerb.amr==null) {
         await box!.put(verb.maadi, verb);
       }
     }

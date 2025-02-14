@@ -14,6 +14,8 @@ abstract class ArabicTerms {
   static const baab = 'باب';
   static const meaning = 'معنى';
   static const masdar = 'المصدر';
+  static const amr = 'الأمر';
+  static const nahi = 'النهي';
 
   static const listOfBaabs = [
     baabFatahaYaftahu,

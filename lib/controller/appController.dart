@@ -46,8 +46,12 @@ class AppControllerState extends ChangeNotifier {
       generateNewRandomQuestionVerb();
     }
 
-    //this if data was emptyl;
-    if(currentSessionVerbs.isEmpty){
+    //this if data was empty
+    if(currentSessionVerbs.isEmpty || currentSessionVerbs.firstOrNull?.amr == null ){
+      print("load");
+      if(currentSessionVerbs.firstOrNull?.amr  == null){
+        print("data was present but amr was null");
+      }
       VerbAppDatabase.fillVerbsFromSource().then((v){
         currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
         generateNewRandomQuestionVerb();

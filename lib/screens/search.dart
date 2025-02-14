@@ -4,6 +4,7 @@ import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/styles.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:baab_practice/widgets/verbCard.dart';
+import 'package:baab_practice/widgets/verbRow.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -45,55 +46,67 @@ class _SearchPageState extends ConsumerState<SearchPage> {
             style: appbarTextStyle,
           ),
         ),
-        body: SingleChildScrollView(
-          child: Center(
-            child: Column(
-              children: [
-                Container(
-                  constraints: BoxConstraints(maxWidth: 500),
-                  padding: EdgeInsets.symmetric(vertical: 5),
-                  child: TextField(
-                    autofocus: true,
-                    focusNode: _searchFocusNode, // Preserve focus
-                    textAlign: TextAlign.center,
-                    controller: _searchBoxController,
-                    decoration: InputDecoration(
-                      hintText: 'حمل/বহন করা...',
-                      prefixIcon: InkWell(
-                        child: Icon(Icons.search),
-                        onTap: () {
-                          searchControl.search(forceRefresh: true);
-                          _searchFocusNode.requestFocus(); // Keep focus after clicking search
-                        },
-                      ),
-                    ),
-                    onChanged: (query) {
-                      searchControl.updateSearchString(query);
-                      _searchFocusNode.requestFocus(); // Keep focus on every change
+        body: Column(
+          children: [
+            Container(
+              constraints: BoxConstraints(maxWidth: 500),
+              padding: EdgeInsets.symmetric(vertical: 5),
+              child: TextField(
+                autofocus: true,
+                focusNode: _searchFocusNode, // Preserve focus
+                textAlign: TextAlign.center,
+                controller: _searchBoxController,
+                decoration: InputDecoration(
+                  hintText: 'حمل/বহন করা...',
+                  prefixIcon: InkWell(
+                    child: Icon(Icons.search),
+                    onTap: () {
+                      searchControl.search(forceRefresh: true);
+                      _searchFocusNode.requestFocus(); // Keep focus after clicking search
                     },
                   ),
                 ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
-                    width: MediaQuery.of(context).size.width,
-                    child: PaginatedDataTable(
-                      columns: const [
-                        DataColumn(label: Text(ArabicTerms.maadi, style: MyTextStyles.datatableHeader)),
-                        DataColumn(label: Text(ArabicTerms.meaning, style: MyTextStyles.datatableHeader)),
-                        DataColumn(label: Text(ArabicTerms.mudari, style: MyTextStyles.datatableHeader)),
-                        DataColumn(label: Text(ArabicTerms.masdar, style: MyTextStyles.datatableHeader)),
-                        DataColumn(label: Text(ArabicTerms.baab, style: MyTextStyles.datatableHeader)),
-                      ],
-                      source: VerbsDataSource(searchControl.searchedVerbs),
-                      rowsPerPage: 9, // Number of rows per page
-                    ),
-                  ),
-                ),
-              ],
+                onChanged: (query) {
+                  searchControl.updateSearchString(query);
+                  _searchFocusNode.requestFocus(); // Keep focus on every change
+                },
+              ),
             ),
-          ),
+            SizedBox(
+              height: 5,
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 10,
+                ),
+
+                child: ListView(
+                  children: searchControl.searchedVerbs
+                      .map((item) => VerbRow(verb: item))
+                      .toList(), // Number of rows per page
+                ),
+              ),
+            ),
+            /*SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 0),
+                width: MediaQuery.of(context).size.width,
+                child: PaginatedDataTable(
+                  columns: const [
+                    DataColumn(label: Text(ArabicTerms.maadi, style: MyTextStyles.datatableHeader)),
+                    DataColumn(label: Text(ArabicTerms.meaning, style: MyTextStyles.datatableHeader)),
+                    DataColumn(label: Text(ArabicTerms.mudari, style: MyTextStyles.datatableHeader)),
+                    DataColumn(label: Text(ArabicTerms.masdar, style: MyTextStyles.datatableHeader)),
+                    DataColumn(label: Text(ArabicTerms.baab, style: MyTextStyles.datatableHeader)),
+                  ],
+                  source: VerbsDataSource(searchControl.searchedVerbs),
+                  rowsPerPage: 9, // Number of rows per page
+                ),
+              ),
+            ),*/
+          ],
         ),
       ),
     );

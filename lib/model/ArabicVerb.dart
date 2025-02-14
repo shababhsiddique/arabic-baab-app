@@ -32,6 +32,12 @@ class ArabicVerb extends HiveObject {
   @HiveField(8)
   int? failHistory;
 
+  @HiveField(9)
+  String? amr;
+
+  @HiveField(10)
+  String? nahi;
+
   ArabicVerb({
     required this.maadi,
     required this.mudari,
@@ -42,6 +48,8 @@ class ArabicVerb extends HiveObject {
     this.isFavorite = false,
     this.failCounter = 0,
     this.failHistory = 0,
+    this.amr = '',
+    this.nahi = '',
   });
 
   String pickRandomQuestion() {

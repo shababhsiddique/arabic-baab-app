@@ -32,7 +32,7 @@ class VerbCard extends ConsumerWidget {
           ),
           margin: EdgeInsets.only(
             top: MediaQuery.of(context).orientation == Orientation.portrait
-                ? 80
+                ? 50
                 : 0,
             bottom: 5,
             right: 15,
@@ -62,14 +62,18 @@ class VerbCard extends ConsumerWidget {
                     textDirection: TextDirection.rtl, // Right-to-left for Arabic
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 8),
                 createDataRow(ArabicTerms.maadi,  arabicVerb.maadi , showingAnswer),
                 SizedBox(height: 3),
                 createDataRow(ArabicTerms.mudari, arabicVerb.mudari, showingAnswer),
                 SizedBox(height: 3),
+                createDataRow(ArabicTerms.meaning, arabicVerb.bengaliMeaning, showingAnswer),
+                SizedBox(height: 3),
                 createDataRow(ArabicTerms.masdar, arabicVerb.masdar, showingAnswer),
                 SizedBox(height: 3),
-                createDataRow(ArabicTerms.meaning, arabicVerb.bengaliMeaning, showingAnswer),
+                createDataRow(ArabicTerms.amr, arabicVerb.amr??"", showingAnswer),
+                SizedBox(height: 3),
+                createDataRow(ArabicTerms.nahi, arabicVerb.nahi??"", showingAnswer),
                 SizedBox(height: 3),
                 createDataRow(ArabicTerms.baab, arabicVerb.baab, showingAnswer),
                 SizedBox(height: 8),

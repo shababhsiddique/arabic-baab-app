@@ -37,4 +37,12 @@ abstract class MyTextStyles {
     fontWeight: FontWeight.bold,
   );
 
+  static const TextStyle cardListRowText = TextStyle(
+    fontSize: 18,
+  );
+
+  static const TextStyle cardListRowTextArabic = TextStyle(
+    fontSize: 20,
+  );
+
 }

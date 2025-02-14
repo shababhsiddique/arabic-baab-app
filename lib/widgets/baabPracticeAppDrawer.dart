@@ -17,7 +17,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
 
     List<ListTile> baabOptions = [];
 
-    showMessage(String message){
+    showMessage(String message) {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),
       ));
@@ -33,10 +33,10 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               style: MyTextStyles.radioArabicBaab,
             ),
             Switch(
-              value: applicationController.includeBaabs
-                  .contains(baab),
+              value: applicationController.includeBaabs.contains(baab),
               onChanged: (value) {
-                applicationController.updateBaabSelection(baab: baab, enable: value);
+                applicationController.updateBaabSelection(
+                    baab: baab, enable: value);
                 showMessage("Updated word pool");
               },
             )
@@ -52,14 +52,17 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
       child: ListView(
         padding: EdgeInsets.zero,
         children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.blue,
-            ),
-            child: Text(
-              'Arabic Verbs Practice Helper App ',
-              style: TextStyle(
-                fontSize: 25,
+          SizedBox(
+            height: 80,
+            child: DrawerHeader(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+              child: Text(
+                'Verb Settings',
+                style: TextStyle(
+                  fontSize: 25,
+                ),
               ),
             ),
           ),
@@ -76,14 +79,14 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               Navigator.of(context).popAndPushNamed('/viewAll');
             },
           ),
-          SizedBox(height: 7),
+          SizedBox(height: 2),
           ListTile(
             title: const Text('View Mistake History'),
             onTap: () {
               Navigator.of(context).popAndPushNamed('/viewMistake');
             },
           ),
-          SizedBox(height: 7),
+          SizedBox(height: 2),
           ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -98,7 +101,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               ],
             ),
           ),
-          SizedBox(height: 7),
+          SizedBox(height: 2),
           ListTile(
             title: const Text('Included baabs:'),
           ),
@@ -112,7 +115,7 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               Navigator.of(context).pop();
             },
           ),
-          SizedBox(height: 7),
+          SizedBox(height: 2),
           ListTile(
             title: const Text('Clear Mistake History'),
             onTap: () async {
@@ -123,16 +126,15 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               Navigator.of(context).pop();
             },
           ),
-          SizedBox(height: 7),
-
+          SizedBox(height: 2),
           ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 InkWell(
-                    child: Text("Dark Mode"),
+                  child: Text("Dark Mode"),
                   onLongPress: () async {
-                      await VerbAppDatabase.clearData();
+                    await VerbAppDatabase.clearData();
                     await VerbAppDatabase.fillVerbsFromSource();
                     applicationController.loadSession();
                     applicationController.generateNewRandomQuestionVerb();
@@ -148,11 +150,16 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
               ],
             ),
           ),
-          Text(
-            "v${applicationController.appVersion}",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 15,
+          Padding(
+            padding: EdgeInsets.only(
+              bottom: 20,
+            ),
+            child: Text(
+              "v${applicationController.appVersion}",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 15,
+              ),
             ),
           )
         ],
