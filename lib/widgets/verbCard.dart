@@ -56,7 +56,7 @@ class VerbCard extends ConsumerWidget {
                   alignment: Alignment.center,
                   width: double.infinity,
                   height: 50,
-                  child: Text(
+                  child: SelectableText(
                     question,
                     style: MyTextStyles.cardTitle,
                     textDirection: TextDirection.rtl, // Right-to-left for Arabic
@@ -209,12 +209,12 @@ Widget createDataRow(String title, String value, bool showAnswer) {
           padding: const EdgeInsets.only(
             left: 15,
           ),
-          child: Text(
+          child: SelectableText(
             showAnswer ? value : "guess...",
-            overflow: TextOverflow.ellipsis,
             style: MyTextStyles.cardColumnValue.copyWith(
               fontSize: (title == ArabicTerms.meaning ? 19 :null),
               color: !showAnswer ? Colors.grey : null,
+              overflow: TextOverflow.ellipsis,
             ),
           ),
         ),

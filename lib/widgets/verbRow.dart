@@ -13,14 +13,15 @@ class VerbRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    Widget buildRow(title, data){
+    Widget buildRow(title, data, {direction= TextDirection.rtl,}){
       return Padding(
         padding: const EdgeInsets.all(5.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("$title :", style: MyTextStyles.cardColumnHeading,),
+            Text("$title :", style: MyTextStyles.cardColumnHeading),
             SelectableText(data,
+              textDirection: direction,
               style: MyTextStyles.cardColumnValue.copyWith(
                 fontSize: (title == ArabicTerms.meaning ? 19 :null),
                 overflow: TextOverflow.fade,
@@ -37,9 +38,10 @@ class VerbRow extends StatelessWidget {
             context: context,
             builder: (BuildContext context){
               return AlertDialog(
-                title: Text(
+                title: SelectableText(
                   verb.maadi,
                   textAlign: TextAlign.center,
+                  textDirection: TextDirection.rtl,
                   style: MyTextStyles.cardTitle,
                 ),
                 content: Container(
@@ -52,12 +54,12 @@ class VerbRow extends StatelessWidget {
                       //mainAxisSize: MainAxisSize.min,
                       children: [
                         buildRow(ArabicTerms.mudari,verb.mudari),
-                        buildRow(ArabicTerms.meaning,verb.bengaliMeaning),
+                        buildRow(ArabicTerms.meaning,verb.bengaliMeaning, direction: TextDirection.ltr),
                         buildRow(ArabicTerms.amr,verb.amr??""),
                         buildRow(ArabicTerms.nahi,verb.nahi??""),
                         buildRow(ArabicTerms.masdar,verb.masdar),
                         buildRow(ArabicTerms.baab,verb.baab),
-                        showFail ? buildRow("Mistakes","${verb.failHistory??0} (${verb.failCounter})") : Container(),
+                        showFail ? buildRow("Mistakes","${verb.failHistory??0} (${verb.failCounter})", direction: TextDirection.ltr) : Container(),
                       ],
                     ),
                   ),
@@ -89,13 +91,19 @@ class VerbRow extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(verb.maadi, style: MyTextStyles.cardListRowTextArabic, overflow: TextOverflow.fade,),
-                showFail ? Text(" (${verb.failHistory})"): Container(),
-                Text("  -  "),
-                Text(verb.mudari, style: MyTextStyles.cardListRowTextArabic, overflow: TextOverflow.fade,),
+                SelectableText(verb.maadi, style: MyTextStyles.cardListRowTextArabic.copyWith(
+                  overflow: TextOverflow.fade
+                ),),
+                showFail ? SelectableText(" (${verb.failHistory})"): Container(),
+                SelectableText("  -  "),
+                SelectableText(verb.mudari, style: MyTextStyles.cardListRowTextArabic.copyWith(
+                    overflow: TextOverflow.fade
+                ), ),
               ],
             ),
-            Text(verb.bengaliMeaning, style: MyTextStyles.cardListRowText, overflow: TextOverflow.fade,),
+            SelectableText(verb.bengaliMeaning, style: MyTextStyles.cardListRowText.copyWith(
+                overflow: TextOverflow.fade
+            ),),
           ],
         ),
       ),
