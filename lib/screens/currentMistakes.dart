@@ -39,7 +39,7 @@ class _AllMistakesPageState extends State<AllMistakesPage> {
         width: MediaQuery.of(context).size.width,
         child: ListView(
           children: verbs
-              .map((item) => VerbRow(verb: item))
+              .map((item) => VerbRow(verb: item, showFail: true))
               .toList(), // Number of rows per page
         ),
       ),

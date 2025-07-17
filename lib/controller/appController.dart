@@ -30,6 +30,9 @@ class AppControllerState extends ChangeNotifier {
   String appVersion ="";
   bool practiceMistakesOnly = VerbAppPreferences.getBool(VerbAppPreferences.practiceMistakesOnlyMode);
 
+  // New property for the selector
+  String questionBy = VerbAppPreferences.getString(VerbAppPreferences.selectedQuestionByKey) ?? "random";
+
   List<String> includeBaabs = List.from(VerbAppPreferences.getBaabSelection().toList());
 
   //final ref;
@@ -129,7 +132,8 @@ class AppControllerState extends ChangeNotifier {
       currentQuestionVerbIndex = Random().nextInt(currentSessionVerbs.length);
       //set this as current verb
       currentQuestionVerb = currentSessionVerbs.elementAt(currentQuestionVerbIndex);
-      currentQuestionText = currentQuestionVerb?.pickRandomQuestion() ?? "";
+
+      currentQuestionText = currentQuestionVerb?.getQuestion(questionBy) ?? "";
 
     } else {
       currentQuestionVerb = null;
@@ -177,6 +181,12 @@ class AppControllerState extends ChangeNotifier {
       generateNewRandomQuestionVerb();
     }
     //notifyListeners();
+  }
+
+  updateSelectedQuestionBy(String option) {
+    questionBy = option;
+    VerbAppPreferences.setString(VerbAppPreferences.selectedQuestionByKey, option);
+    notifyListeners();
   }
 
 

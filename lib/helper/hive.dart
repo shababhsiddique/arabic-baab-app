@@ -196,6 +196,9 @@ abstract class VerbAppDatabase {
         .cast<ArabicVerb>()
         .toList();
 
+    // Sort list in descending order based on failHistory
+    selectedVerbs.sort((a, b) => b.failHistory!.compareTo(a.failHistory as num));
+
     return selectedVerbs;
   }
 

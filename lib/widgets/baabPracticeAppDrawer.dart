@@ -103,6 +103,31 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ),
           SizedBox(height: 2),
           ListTile(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Select Option:"),
+                DropdownButton<String>(
+                  value: applicationController.questionBy,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      applicationController.updateSelectedQuestionBy(newValue);
+                      showMessage("Question By Option updated");
+                    }
+                  },
+                  items: <String>['maadi', 'mudari', 'meaning', 'masdar', 'random']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: 2),
+          ListTile(
             title: const Text('Included baabs:'),
           ),
           ...baabOptions,

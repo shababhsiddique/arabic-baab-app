@@ -6,8 +6,9 @@ import 'package:flutter/material.dart';
 
 class VerbRow extends StatelessWidget {
   final ArabicVerb verb;
+  final bool showFail;
 
-  const VerbRow({super.key, required this.verb});
+  const VerbRow({super.key, required this.verb, this.showFail = false});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +20,11 @@ class VerbRow extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text("$title :", style: MyTextStyles.cardColumnHeading,),
-            Text(data,
+            SelectableText(data,
               style: MyTextStyles.cardColumnValue.copyWith(
                 fontSize: (title == ArabicTerms.meaning ? 19 :null),
+                overflow: TextOverflow.fade,
               ),
-              overflow: TextOverflow.fade,
             ),
           ],
         ),
@@ -44,7 +45,7 @@ class VerbRow extends StatelessWidget {
                 content: Container(
                   height: double.infinity,
                   constraints: BoxConstraints(
-                    maxHeight: 290
+                    maxHeight: showFail ? 310 : 290
                   ),
                   child: SingleChildScrollView(
                     child: Column(
@@ -56,6 +57,7 @@ class VerbRow extends StatelessWidget {
                         buildRow(ArabicTerms.nahi,verb.nahi??""),
                         buildRow(ArabicTerms.masdar,verb.masdar),
                         buildRow(ArabicTerms.baab,verb.baab),
+                        showFail ? buildRow("Mistakes","${verb.failHistory??0} (${verb.failCounter})") : Container(),
                       ],
                     ),
                   ),
@@ -88,6 +90,7 @@ class VerbRow extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(verb.maadi, style: MyTextStyles.cardListRowTextArabic, overflow: TextOverflow.fade,),
+                showFail ? Text(" (${verb.failHistory})"): Container(),
                 Text("  -  "),
                 Text(verb.mudari, style: MyTextStyles.cardListRowTextArabic, overflow: TextOverflow.fade,),
               ],

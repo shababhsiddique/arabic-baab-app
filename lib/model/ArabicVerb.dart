@@ -66,6 +66,22 @@ class ArabicVerb extends HiveObject {
     return properties[randomIndex];
   }
 
+  String getQuestion(String property) {
+
+    switch(property) {
+      case 'maadi':
+        return maadi;
+      case 'mudari':
+        return mudari;
+      case 'meaning':
+        return bengaliMeaning;
+      case 'masdar':
+        return masdar;
+      default:
+        return pickRandomQuestion();
+    }
+  }
+
   decreaseFailCount(){
     if(failCounter > 0){
       failCounter--;
