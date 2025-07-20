@@ -39,16 +39,26 @@ abstract class VerbAppDatabase {
   }
 
   static List<ArabicVerb> fetchVerbsByBaab(List<String> selectedBaabs,
-      {bool mistakeOnly = false}) {
+      {bool mistakeOnly = false, bool favoritesOnly = false, String selectMode = 'All'}) {
     box ??= Hive.box<ArabicVerb>(mainVerbBox);
-    // Filter verbs where failCounter is greater than 0 (indicating incorrect attempts)
+    // Filter verbs based on selected criteria
     List<ArabicVerb> selectedVerbs = [];
 
     for (var baab in selectedBaabs) {
-      for (ArabicVerb verb in box!.values.where((verb) =>
-      verb.baab == baab &&
-          (!mistakeOnly || (verb.failHistory ?? 0) > 0))) {
-        selectedVerbs.add(verb);
+      for (ArabicVerb verb in box!.values.where((verb) =>verb.baab == baab) ){
+
+        if(selectMode == 'All'){
+          selectedVerbs.add(verb);
+        }else if(selectMode == 'Mistakes' && (verb.failHistory ?? 0) > 0 ){
+          selectedVerbs.add(verb);
+        } else if(selectMode == 'Favorites' && verb.isFavorite) {
+          selectedVerbs.add(verb);
+        }
+
+        /*if((!mistakeOnly || (verb.failHistory ?? 0) > 0)){
+
+        }
+        selectedVerbs.add(verb);*/
       }
     }
 
@@ -198,6 +208,17 @@ abstract class VerbAppDatabase {
 
     // Sort list in descending order based on failHistory
     selectedVerbs.sort((a, b) => b.failHistory!.compareTo(a.failHistory as num));
+
+    return selectedVerbs;
+  }
+
+  static List<ArabicVerb> fetchVerbsWithFavorite() {
+    box ??= Hive.box<ArabicVerb>(mainVerbBox);
+    // Filter verbs where isFavorite is true
+    List<ArabicVerb> selectedVerbs = box!.values
+        .where((item) => (item as ArabicVerb).isFavorite)
+        .cast<ArabicVerb>()
+        .toList();
 
     return selectedVerbs;
   }

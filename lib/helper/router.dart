@@ -1,5 +1,6 @@
 import 'package:baab_practice/screens/all.dart';
 import 'package:baab_practice/screens/currentMistakes.dart';
+import 'package:baab_practice/screens/favorites.dart';
 import 'package:baab_practice/screens/home.dart';
 import 'package:baab_practice/screens/search.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,6 +30,11 @@ class RouteGenerator {
         return MaterialPageRoute(
           fullscreenDialog: false,
           builder: (_) => AllMistakesPage(),
+        );
+      case '/viewFavorites':
+        return MaterialPageRoute(
+          fullscreenDialog: false,
+          builder: (_) => AllFavoritesPage(),
         );
 
       default:

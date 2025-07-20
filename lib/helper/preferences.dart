@@ -14,6 +14,7 @@ abstract class VerbAppPreferences {
   static const themeSystemDefault = 'system';
   static const baabEnabledKey_ = 'baabEnable_';
   static const practiceMistakesOnlyMode = 'mistakesOnly';
+  static const practiceModeKey = 'practiceMode';
   static const selectedQuestionByKey = 'questionByKey';
 
   static Future<SharedPreferences?> initializePreferences() async {

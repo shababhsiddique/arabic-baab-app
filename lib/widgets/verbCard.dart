@@ -51,16 +51,32 @@ class VerbCard extends ConsumerWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // Arabic Word with Tashkeel
-                SizedBox(height: 5),
-                Container(
-                  alignment: Alignment.center,
-                  width: double.infinity,
-                  height: 50,
-                  child: SelectableText(
-                    question,
-                    style: MyTextStyles.cardTitle,
-                    textDirection: TextDirection.rtl, // Right-to-left for Arabic
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Empty SizedBox to balance the layout
+                    SizedBox(width: 48),
+                    Expanded(
+                      child: Container(
+                        alignment: Alignment.center,
+                        height: 50,
+                        child: SelectableText(
+                          question,
+                          style: MyTextStyles.cardTitle,
+                          textDirection: TextDirection.rtl, // Right-to-left for Arabic
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        arabicVerb.isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: arabicVerb.isFavorite ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: () {
+                        applicationControl.toggleFavorite(arabicVerb);
+                      },
+                    ),
+                  ],
                 ),
                 SizedBox(height: 8),
                 createDataRow(ArabicTerms.maadi,  arabicVerb.maadi , showingAnswer),

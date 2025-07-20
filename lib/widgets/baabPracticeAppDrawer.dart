@@ -88,16 +88,33 @@ class BaabPracticeAppDrawer extends ConsumerWidget {
           ),
           SizedBox(height: 2),
           ListTile(
+            title: const Text('View Favorite Verbs'),
+            onTap: () {
+              Navigator.of(context).popAndPushNamed('/viewFavorites');
+            },
+          ),
+          SizedBox(height: 2),
+          ListTile(
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Practice Mistakes Only"),
-                Switch(
-                  value: applicationController.practiceMistakesOnly,
-                  onChanged: (value) {
-                    applicationController.toggleMistakeOnlyMode();
+                Text("Practice Mode:"),
+                DropdownButton<String>(
+                  value: applicationController.practiceMode,
+                  onChanged: (String? newValue) {
+                    if (newValue != null) {
+                      applicationController.updatePracticeMode(newValue);
+                      showMessage("Practice Mode updated");
+                    }
                   },
-                )
+                  items: <String>['All', 'Mistakes', 'Favorites']
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
               ],
             ),
           ),

@@ -28,7 +28,11 @@ class AppControllerState extends ChangeNotifier {
   bool showAnswer = false;
 
   String appVersion ="";
-  bool practiceMistakesOnly = VerbAppPreferences.getBool(VerbAppPreferences.practiceMistakesOnlyMode);
+  // Practice mode can be "All", "Mistakes", or "Favorites"
+  String practiceMode = VerbAppPreferences.getString(VerbAppPreferences.practiceModeKey) ?? "All";
+
+  // Keep for backward compatibility
+  bool get practiceMistakesOnly => practiceMode == "Mistakes";
 
   // New property for the selector
   String questionBy = VerbAppPreferences.getString(VerbAppPreferences.selectedQuestionByKey) ?? "random";
@@ -43,7 +47,7 @@ class AppControllerState extends ChangeNotifier {
 
   loadSession(){
     print("current $includeBaabs");
-    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
+    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, selectMode: practiceMode);
 
     if(currentQuestionVerb == null && currentSessionVerbs.isNotEmpty){
       generateNewRandomQuestionVerb();
@@ -56,7 +60,15 @@ class AppControllerState extends ChangeNotifier {
         print("data was present but amr was null");
       }
       VerbAppDatabase.fillVerbsFromSource().then((v){
-        currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
+        // Fetch verbs again after loading from source
+        if (practiceMode == "Mistakes") {
+          currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: true);
+        } else if (practiceMode == "Favorites") {
+          currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, favoritesOnly: true);
+        } else {
+          // Default to "All"
+          currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+        }
         generateNewRandomQuestionVerb();
         notifyListeners();
       });
@@ -100,12 +112,21 @@ class AppControllerState extends ChangeNotifier {
     notifyListeners();
   }
 
-  void toggleMistakeOnlyMode(){
-    practiceMistakesOnly = !practiceMistakesOnly;
-    VerbAppPreferences.setBool(VerbAppPreferences.practiceMistakesOnlyMode, practiceMistakesOnly);
+  void updatePracticeMode(String mode) {
+    practiceMode = mode;
+    VerbAppPreferences.setString(VerbAppPreferences.practiceModeKey, mode);
     loadSession();
     generateNewRandomQuestionVerb();
     notifyListeners();
+  }
+
+  // Keep for backward compatibility
+  void toggleMistakeOnlyMode() {
+    if (practiceMode == "Mistakes") {
+      updatePracticeMode("All");
+    } else {
+      updatePracticeMode("Mistakes");
+    }
   }
 
 
@@ -175,7 +196,15 @@ class AppControllerState extends ChangeNotifier {
     if(includeBaabs.contains(baab)==false && enable == true){
       includeBaabs.add(baab);
     }
-    currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: practiceMistakesOnly);
+    // Fetch verbs based on practice mode
+    if (practiceMode == "Mistakes") {
+      currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, mistakeOnly: true);
+    } else if (practiceMode == "Favorites") {
+      currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs, favoritesOnly: true);
+    } else {
+      // Default to "All"
+      currentSessionVerbs = VerbAppDatabase.fetchVerbsByBaab(includeBaabs);
+    }
 
     if(currentSessionVerbs.isNotEmpty){
       generateNewRandomQuestionVerb();
@@ -186,6 +215,12 @@ class AppControllerState extends ChangeNotifier {
   updateSelectedQuestionBy(String option) {
     questionBy = option;
     VerbAppPreferences.setString(VerbAppPreferences.selectedQuestionByKey, option);
+    notifyListeners();
+  }
+
+  toggleFavorite(ArabicVerb verb) {
+    verb.isFavorite = !verb.isFavorite;
+    verb.save();
     notifyListeners();
   }
 

@@ -1,17 +1,20 @@
 
+import 'package:baab_practice/controller/appController.dart';
 import 'package:baab_practice/helper/arabic.dart';
 import 'package:baab_practice/helper/styles.dart';
 import 'package:baab_practice/model/ArabicVerb.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class VerbRow extends StatelessWidget {
+class VerbRow extends ConsumerWidget {
   final ArabicVerb verb;
   final bool showFail;
 
   const VerbRow({super.key, required this.verb, this.showFail = false});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final applicationControl = ref.watch(appController);
 
     Widget buildRow(title, data, {direction= TextDirection.rtl,}){
       return Padding(
@@ -38,11 +41,27 @@ class VerbRow extends StatelessWidget {
             context: context,
             builder: (BuildContext context){
               return AlertDialog(
-                title: SelectableText(
-                  verb.maadi,
-                  textAlign: TextAlign.center,
-                  textDirection: TextDirection.rtl,
-                  style: MyTextStyles.cardTitle,
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        verb.isFavorite ? Icons.favorite : Icons.favorite_border,
+                        color: verb.isFavorite ? Colors.red : Colors.grey,
+                      ),
+                      onPressed: () {
+                        applicationControl.toggleFavorite(verb);
+                      },
+                    ),
+                    Expanded(
+                      child: SelectableText(
+                        verb.maadi,
+                        textAlign: TextAlign.center,
+                        textDirection: TextDirection.rtl,
+                        style: MyTextStyles.cardTitle,
+                      ),
+                    ),
+                  ],
                 ),
                 content: Container(
                   height: double.infinity,
@@ -101,9 +120,23 @@ class VerbRow extends StatelessWidget {
                 ), ),
               ],
             ),
-            SelectableText(verb.bengaliMeaning, style: MyTextStyles.cardListRowText.copyWith(
-                overflow: TextOverflow.fade
-            ),),
+            Row(
+              children: [
+                SelectableText(verb.bengaliMeaning, style: MyTextStyles.cardListRowText.copyWith(
+                    overflow: TextOverflow.fade
+                ),),
+                IconButton(
+                  icon: Icon(
+                    verb.isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: verb.isFavorite ? Colors.red : Colors.grey,
+                    size: 20,
+                  ),
+                  onPressed: () {
+                    applicationControl.toggleFavorite(verb);
+                  },
+                ),
+              ],
+            ),
           ],
         ),
       ),
